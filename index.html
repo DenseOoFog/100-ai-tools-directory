@@ -24,15 +24,16 @@
         var(--bg);
     }
     .wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 34px 20px 60px;
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 28px clamp(14px, 3vw, 34px) 44px;
     }
     .hero {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(20,20,23,0.84);
-      padding: 22px;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      padding: 0 0 8px;
       margin-bottom: 18px;
     }
     h1 {
@@ -45,6 +46,26 @@
       margin: 12px 0 0;
       color: var(--muted);
       font-size: 14px;
+    }
+    .policy-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .policy-link {
+      display: inline-block;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      background: #101013;
+    }
+    .policy-link:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.42);
     }
     .row {
       display: grid;
@@ -97,10 +118,10 @@
       font-weight: 700;
     }
     .panel {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(19,19,22,0.9), rgba(12,12,14,0.9));
-      padding: 16px;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      padding: 0;
     }
     .chart-grid {
       display: grid;
@@ -216,6 +237,21 @@
       color: #dbf2ff;
       background: rgba(135,196,255,0.15);
     }
+    .site-footer {
+      margin-top: 14px;
+      border: none;
+      border-top: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+      padding: 12px 0 0;
+      display: grid;
+      gap: 8px;
+    }
+    .footer-note {
+      margin: 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
     @media (max-width: 900px) {
       .chart-grid { grid-template-columns: 1fr; }
       .insight-grid { grid-template-columns: 1fr; }
@@ -224,8 +260,8 @@
     }
     @media (max-width: 620px) {
       .score-grid { grid-template-columns: 1fr; }
-      .wrap { padding: 24px 14px 44px; }
-      .hero { padding: 16px; }
+      .wrap { padding: 20px 12px 34px; }
+      .hero { padding: 0; }
     }
   </style>
 </head>
@@ -282,6 +318,17 @@
       </div>
       <div id="recoCards" class="score-grid"></div>
     </section>
+
+    <footer class="site-footer">
+      <p class="footer-note">Policy & compliance pages are available for users and ad review.</p>
+      <nav class="policy-links" aria-label="Footer policy links">
+        <a class="policy-link" href="./about.html">About</a>
+        <a class="policy-link" href="./contact.html">Contact</a>
+        <a class="policy-link" href="./privacy-policy.html">Privacy Policy</a>
+        <a class="policy-link" href="./disclaimer.html">Disclaimer</a>
+        <a class="policy-link" href="./terms.html">Terms</a>
+      </nav>
+    </footer>
   </main>
 
   <script>
@@ -476,7 +523,7 @@
       const selectedSeed = activeSeed || defaultSeed;
       const topA = rows[0]?.tool || "";
       const topB = rows[1]?.tool || "";
-      let route = `route-view.html?intent=${encodeURIComponent(activeIntent)}&category=${encodeURIComponent(activeCategory)}&slug=${encodeURIComponent(slug)}`;
+      let route = `vertical-template.html?intent=${encodeURIComponent(activeIntent)}&category=${encodeURIComponent(activeCategory)}&slug=${encodeURIComponent(slug)}`;
       if (selectedSeed) route = `${route}&kw=${encodeURIComponent(selectedSeed)}`;
       if (activeIntent === "compare" && topA && topB) {
         route = `${route}&a=${encodeURIComponent(topA)}&b=${encodeURIComponent(topB)}`;

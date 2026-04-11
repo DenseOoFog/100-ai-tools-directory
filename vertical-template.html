@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Tool Lab Route View</title>
+  <title>AI Tool Lab Vertical Template</title>
+  <meta name="description" content="Reusable vertical category template with intro, chart, filter, recommendation, and FAQ for AI tool comparison pages." />
   <style>
     :root {
       --bg: #0b0b0c;
       --panel: #131316;
-      --line: rgba(255,255,255,0.14);
+      --line: rgba(255,255,255,.14);
       --text: #f2f2f4;
-      --muted: rgba(242,242,244,0.66);
+      --muted: rgba(242,242,244,.66);
     }
     * { box-sizing: border-box; }
     body {
@@ -38,17 +39,26 @@
     }
     h1 {
       margin: 0;
-      font-size: clamp(24px, 4vw, 40px);
+      font-size: clamp(24px, 4vw, 42px);
       letter-spacing: -0.03em;
       font-weight: 650;
     }
-    .sub { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
+    h2 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      letter-spacing: -0.02em;
     }
+    .sub { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .control {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #101013;
+      color: var(--text);
+      font-size: 12px;
+      padding: 8px 10px;
+    }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
     .pill {
       border: 1px solid var(--line);
       border-radius: 999px;
@@ -59,8 +69,8 @@
     }
     .row {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 10px;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
     .card {
       border: 1px solid var(--line);
@@ -70,16 +80,8 @@
       display: grid;
       gap: 8px;
     }
-    .card h3 {
-      margin: 0;
-      font-size: 14px;
-    }
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-    }
+    .card h3 { margin: 0; font-size: 14px; }
+    .card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.45; }
     .score {
       font-size: 11px;
       color: #dbf2ff;
@@ -90,6 +92,7 @@
       background: rgba(135,196,255,0.15);
     }
     .link {
+      width: fit-content;
       font-size: 11px;
       color: #cfe7ff;
       text-decoration: none;
@@ -97,9 +100,11 @@
       border-radius: 999px;
       padding: 4px 10px;
       background: rgba(135,196,255,0.12);
-      width: fit-content;
     }
     .link:hover { color: #fff; border-color: rgba(255,255,255,0.42); }
+    .faq-item + .faq-item { margin-top: 8px; }
+    .faq-q { font-size: 13px; color: var(--text); margin: 0; }
+    .faq-a { font-size: 12px; color: var(--muted); margin: 4px 0 0; line-height: 1.45; }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -122,10 +127,7 @@
       font-size: 12px;
       background: rgba(255,255,255,0.04);
     }
-    @media (max-width: 900px) {
-      .row { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 620px) {
+    @media (max-width: 860px) {
       .row { grid-template-columns: 1fr; }
       .wrap { padding: 20px 12px 34px; }
     }
@@ -134,15 +136,39 @@
 <body>
   <main class="wrap">
     <a class="back" href="./index.html">Back to Lab</a>
+
     <section class="panel">
-      <h1 id="title">AI Tool Route</h1>
-      <p id="subtitle" class="sub"></p>
+      <h1 id="title">Vertical Category Hub</h1>
+      <p id="intro" class="sub"></p>
+      <div class="toolbar">
+        <label>
+          <select id="sortBy" class="control">
+            <option value="score">Sort: Composite Score</option>
+            <option value="quality">Sort: Quality</option>
+            <option value="speed">Sort: Speed</option>
+            <option value="freeValue">Sort: Free Value</option>
+            <option value="automation">Sort: Automation</option>
+          </select>
+        </label>
+        <label>
+          <select id="minScore" class="control">
+            <option value="0">Filter: score >= 0</option>
+            <option value="7">Filter: score >= 7</option>
+            <option value="8">Filter: score >= 8</option>
+            <option value="9">Filter: score >= 9</option>
+          </select>
+        </label>
+      </div>
       <div id="meta" class="meta"></div>
     </section>
+
     <section class="panel">
+      <h2>Recommendation</h2>
       <div id="cards" class="row"></div>
     </section>
+
     <section class="panel">
+      <h2>Scores</h2>
       <table>
         <thead>
           <tr>
@@ -157,7 +183,24 @@
         <tbody id="tableBody"></tbody>
       </table>
     </section>
+
+    <section class="panel">
+      <h2>FAQ</h2>
+      <div class="faq-item">
+        <p class="faq-q">How is the score calculated?</p>
+        <p class="faq-a">Scores are weighted by intent profile (tools / compare / use-case / free / automation) and normalized to 10-point scale.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Are these official links?</p>
+        <p class="faq-a">Yes. All outbound links point to each tool's official site and open in a new tab.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">How often does this page update?</p>
+        <p class="faq-a">Template supports periodic refresh. Add updated date and scoring notes per vertical page when expanding Day 5+ batches.</p>
+      </div>
+    </section>
   </main>
+
   <script>
     const datasets = {
       text2image: [
@@ -190,93 +233,105 @@
       tools: {
         label: "Tools",
         pageType: "Vertical Category Hub",
-        desc: "Best tools overview for this vertical category.",
+        intro: "A compact overview for this vertical category with objective score sorting and quick outbound decisions.",
         weights: { quality: .24, speed: .18, freeValue: .18, automation: .12, ease: .14, batch: .14 }
       },
       compare: {
         label: "Compare",
         pageType: "Comparison Page",
-        desc: "Head-to-head comparison for two highlighted tools.",
+        intro: "Head-to-head style ranking emphasizing measurable differences across key dimensions.",
         weights: { quality: .34, speed: .20, freeValue: .10, automation: .13, ease: .10, batch: .13 }
       },
       usecase: {
         label: "Use-case",
         pageType: "Use-case Landing Page",
-        desc: "Scenario-first recommendation for creator workflows.",
+        intro: "Scenario-first ranking for creator and business use cases with practical recommendations.",
         weights: { quality: .20, speed: .22, freeValue: .14, automation: .10, ease: .24, batch: .10 }
       },
       free: {
         label: "Free-first",
         pageType: "Free-first Collection Page",
-        desc: "Prioritizes free value for budget-sensitive selection.",
+        intro: "Budget-aware ranking with stronger free-value weighting and practical free-start guidance.",
         weights: { quality: .14, speed: .14, freeValue: .34, automation: .08, ease: .18, batch: .12 }
       },
       automation: {
         label: "Automation",
         pageType: "Automation-focused Page",
-        desc: "Prioritizes API, workflow, and batch automation strength.",
+        intro: "Workflow-oriented view prioritizing automation and batch operation dimensions.",
         weights: { quality: .15, speed: .13, freeValue: .07, automation: .30, ease: .12, batch: .23 }
       }
     };
 
-    const dims = ["quality", "speed", "freeValue", "automation", "ease", "batch"];
     const params = new URLSearchParams(window.location.search);
     const intent = params.get("intent") || "tools";
     const category = params.get("category") || "bgremove";
     const kw = params.get("kw") || "";
-    const compareA = params.get("a") || "";
-    const compareB = params.get("b") || "";
     const config = intentConfig[intent] || intentConfig.tools;
-    const rows = (datasets[category] || datasets.bgremove).map(item => {
-      const score = dims.reduce((sum, key) => sum + item[key] * config.weights[key], 0);
-      return { ...item, score: Number(score.toFixed(2)) };
-    }).sort((a, b) => b.score - a.score);
+    const dims = ["quality", "speed", "freeValue", "automation", "ease", "batch"];
 
-    let finalRows = rows;
-    if (intent === "compare" && compareA && compareB) {
-      const names = new Set([compareA, compareB]);
-      finalRows = rows.filter(row => names.has(row.tool));
-      if (!finalRows.length) finalRows = rows.slice(0, 2);
+    function buildRows() {
+      return (datasets[category] || datasets.bgremove).map((item) => {
+        const score = dims.reduce((sum, key) => sum + item[key] * config.weights[key], 0);
+        return { ...item, score: Number(score.toFixed(2)) };
+      });
     }
 
-    const title = `${categoryLabel[category] || "Vertical Category"} · ${config.label}`;
-    document.getElementById("title").textContent = title;
-    document.getElementById("subtitle").textContent = config.desc;
+    let rows = buildRows();
 
-    const meta = document.getElementById("meta");
-    [config.pageType, `Category: ${categoryLabel[category] || category}`, kw ? `Keyword: ${kw}` : "Keyword: n/a"].forEach((txt) => {
-      const el = document.createElement("span");
-      el.className = "pill";
-      el.textContent = txt;
-      meta.appendChild(el);
-    });
+    function render() {
+      const sortBy = document.getElementById("sortBy").value;
+      const minScore = Number(document.getElementById("minScore").value || 0);
+      const filtered = rows
+        .slice()
+        .sort((a, b) => (b[sortBy] ?? b.score) - (a[sortBy] ?? a.score))
+        .filter((row) => row.score >= minScore);
 
-    const cards = document.getElementById("cards");
-    finalRows.slice(0, 3).forEach((row, idx) => {
-      const card = document.createElement("article");
-      card.className = "card";
-      card.innerHTML = `
-        <h3>#${idx + 1} ${row.tool}</h3>
-        <p>${row.note}</p>
-        <span class="score">Score ${row.score} / 10</span>
-        <a class="link" href="${row.url}" target="_blank" rel="noopener noreferrer nofollow">Open Tool</a>
-      `;
-      cards.appendChild(card);
-    });
+      document.getElementById("title").textContent = `${categoryLabel[category] || "Vertical Category"} · ${config.label}`;
+      document.getElementById("intro").textContent = config.intro;
 
-    const tbody = document.getElementById("tableBody");
-    finalRows.forEach((row) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td><a class="link" href="${row.url}" target="_blank" rel="noopener noreferrer nofollow">${row.tool}</a></td>
-        <td>${row.score}</td>
-        <td>${row.quality}</td>
-        <td>${row.speed}</td>
-        <td>${row.freeValue}</td>
-        <td>${row.automation}</td>
-      `;
-      tbody.appendChild(tr);
-    });
+      const meta = document.getElementById("meta");
+      meta.innerHTML = "";
+      [config.pageType, `Category: ${categoryLabel[category] || category}`, kw ? `Keyword: ${kw}` : "Keyword: n/a", `Rows: ${filtered.length}`]
+        .forEach((text) => {
+          const el = document.createElement("span");
+          el.className = "pill";
+          el.textContent = text;
+          meta.appendChild(el);
+        });
+
+      const cards = document.getElementById("cards");
+      cards.innerHTML = "";
+      filtered.slice(0, 3).forEach((row, idx) => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <h3>#${idx + 1} ${row.tool}</h3>
+          <p>${row.note}</p>
+          <span class="score">Score ${row.score} / 10</span>
+          <a class="link" href="${row.url}" target="_blank" rel="noopener noreferrer nofollow">Open Tool</a>
+        `;
+        cards.appendChild(card);
+      });
+
+      const tbody = document.getElementById("tableBody");
+      tbody.innerHTML = "";
+      filtered.forEach((row) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><a class="link" href="${row.url}" target="_blank" rel="noopener noreferrer nofollow">${row.tool}</a></td>
+          <td>${row.score}</td>
+          <td>${row.quality}</td>
+          <td>${row.speed}</td>
+          <td>${row.freeValue}</td>
+          <td>${row.automation}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById("sortBy").addEventListener("change", render);
+    document.getElementById("minScore").addEventListener("change", render);
+    render();
   </script>
 </body>
 </html>

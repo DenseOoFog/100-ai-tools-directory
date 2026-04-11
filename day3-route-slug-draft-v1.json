@@ -1,0 +1,177 @@
+{
+  "version": "v1",
+  "updated_at": "2026-04-11",
+  "notes": "Draft route matrix for Day 3 template standardization. Use vertical-template.html for initial batch pages.",
+  "route_patterns": {
+    "hub": "hub-{level2}.html",
+    "compare": "compare-{level2}-{toolA}-vs-{toolB}.html",
+    "usecase": "usecase-{level2}-{scenario}.html",
+    "free": "free-{level2}.html",
+    "automation": "automation-{level2}.html"
+  },
+  "template_fallback_route": "vertical-template.html",
+  "items": [
+    {
+      "level_1": "ai-image",
+      "level_2": "background-remover",
+      "slug": "background-remover",
+      "hub": "hub-background-remover.html",
+      "free": "free-background-remover.html",
+      "usecase_example": "usecase-background-remover-ecommerce.html",
+      "fallback_query_example": "vertical-template.html?intent=tools&category=bgremove&kw=best%20ai%20background%20remover"
+    },
+    {
+      "level_1": "ai-image",
+      "level_2": "watermark-remover",
+      "slug": "watermark-remover",
+      "hub": "hub-watermark-remover.html",
+      "free": "free-watermark-remover.html",
+      "usecase_example": "usecase-watermark-remover-product-photos.html",
+      "fallback_query_example": "vertical-template.html?intent=tools&category=watermark&kw=ai%20watermark%20remover"
+    },
+    {
+      "level_1": "ai-image",
+      "level_2": "text-to-image",
+      "slug": "text-to-image",
+      "hub": "hub-text-to-image.html",
+      "free": "free-text-to-image.html",
+      "usecase_example": "usecase-text-to-image-social-content.html",
+      "fallback_query_example": "vertical-template.html?intent=tools&category=text2image&kw=best%20ai%20image%20generator"
+    },
+    {
+      "level_1": "ai-video",
+      "level_2": "text-to-video",
+      "slug": "text-to-video",
+      "hub": "hub-text-to-video.html",
+      "free": "free-text-to-video.html",
+      "usecase_example": "usecase-text-to-video-youtube-shorts.html",
+      "fallback_query_example": "vertical-template.html?intent=usecase&category=text2image&kw=text%20to%20video%20for%20youtube%20shorts"
+    },
+    {
+      "level_1": "ai-video",
+      "level_2": "subtitle-generator",
+      "slug": "subtitle-generator",
+      "hub": "hub-subtitle-generator.html",
+      "free": "free-subtitle-generator.html",
+      "usecase_example": "usecase-subtitle-generator-reels.html",
+      "fallback_query_example": "vertical-template.html?intent=usecase&category=watermark&kw=subtitle%20generator%20for%20reels"
+    },
+    {
+      "level_1": "ai-video",
+      "level_2": "video-translator-dub",
+      "slug": "video-translator-dub",
+      "hub": "hub-video-translator-dub.html",
+      "free": "free-video-translator-dub.html",
+      "usecase_example": "usecase-video-translator-dub-multilingual.html",
+      "fallback_query_example": "vertical-template.html?intent=compare&category=text2image&kw=ai%20video%20translator"
+    },
+    {
+      "level_1": "ai-writing",
+      "level_2": "ai-writer",
+      "slug": "ai-writer",
+      "hub": "hub-ai-writer.html",
+      "free": "free-ai-writer.html",
+      "usecase_example": "usecase-ai-writer-blog-longform.html",
+      "fallback_query_example": "vertical-template.html?intent=tools&category=text2image&kw=best%20ai%20writer"
+    },
+    {
+      "level_1": "ai-writing",
+      "level_2": "grammar-checker",
+      "slug": "grammar-checker",
+      "hub": "hub-grammar-checker.html",
+      "free": "free-grammar-checker.html",
+      "usecase_example": "usecase-grammar-checker-academic-writing.html",
+      "fallback_query_example": "vertical-template.html?intent=free&category=watermark&kw=free%20grammar%20correction%20tool"
+    },
+    {
+      "level_1": "ai-writing",
+      "level_2": "email-writer",
+      "slug": "email-writer",
+      "hub": "hub-email-writer.html",
+      "free": "free-email-writer.html",
+      "usecase_example": "usecase-email-writer-sales-outreach.html",
+      "fallback_query_example": "vertical-template.html?intent=usecase&category=bgremove&kw=sales%20email%20generator"
+    },
+    {
+      "level_1": "ai-seo",
+      "level_2": "keyword-research",
+      "slug": "keyword-research",
+      "hub": "hub-keyword-research.html",
+      "free": "free-keyword-research.html",
+      "usecase_example": "usecase-keyword-research-low-competition.html",
+      "fallback_query_example": "vertical-template.html?intent=automation&category=bgremove&kw=keyword%20clustering%20ai"
+    },
+    {
+      "level_1": "ai-seo",
+      "level_2": "content-brief-generator",
+      "slug": "content-brief-generator",
+      "hub": "hub-content-brief-generator.html",
+      "free": "free-content-brief-generator.html",
+      "usecase_example": "usecase-content-brief-generator-serp.html",
+      "fallback_query_example": "vertical-template.html?intent=tools&category=watermark&kw=ai%20content%20brief%20generator"
+    },
+    {
+      "level_1": "ai-seo",
+      "level_2": "meta-generator",
+      "slug": "meta-generator",
+      "hub": "hub-meta-generator.html",
+      "free": "free-meta-generator.html",
+      "usecase_example": "usecase-meta-generator-ecommerce.html",
+      "fallback_query_example": "vertical-template.html?intent=free&category=text2image&kw=free%20meta%20description%20tool"
+    },
+    {
+      "level_1": "ai-productivity",
+      "level_2": "meeting-notes-summary",
+      "slug": "meeting-notes-summary",
+      "hub": "hub-meeting-notes-summary.html",
+      "free": "free-meeting-notes-summary.html",
+      "usecase_example": "usecase-meeting-notes-summary-remote-teams.html",
+      "fallback_query_example": "vertical-template.html?intent=tools&category=bgremove&kw=ai%20meeting%20notes"
+    },
+    {
+      "level_1": "ai-productivity",
+      "level_2": "pdf-chat",
+      "slug": "pdf-chat",
+      "hub": "hub-pdf-chat.html",
+      "free": "free-pdf-chat.html",
+      "usecase_example": "usecase-pdf-chat-research.html",
+      "fallback_query_example": "vertical-template.html?intent=usecase&category=text2image&kw=chat%20with%20pdf%20ai"
+    },
+    {
+      "level_1": "ai-productivity",
+      "level_2": "document-summarizer",
+      "slug": "document-summarizer",
+      "hub": "hub-document-summarizer.html",
+      "free": "free-document-summarizer.html",
+      "usecase_example": "usecase-document-summarizer-research-papers.html",
+      "fallback_query_example": "vertical-template.html?intent=free&category=bgremove&kw=free%20text%20summarizer%20ai"
+    },
+    {
+      "level_1": "ai-automation",
+      "level_2": "workflow-automation",
+      "slug": "workflow-automation",
+      "hub": "hub-workflow-automation.html",
+      "free": "free-workflow-automation.html",
+      "usecase_example": "usecase-workflow-automation-small-business.html",
+      "fallback_query_example": "vertical-template.html?intent=automation&category=bgremove&kw=ai%20workflow%20automation"
+    },
+    {
+      "level_1": "ai-automation",
+      "level_2": "agent-builder",
+      "slug": "agent-builder",
+      "hub": "hub-agent-builder.html",
+      "free": "free-agent-builder.html",
+      "usecase_example": "usecase-agent-builder-customer-ops.html",
+      "fallback_query_example": "vertical-template.html?intent=automation&category=text2image&kw=ai%20agent%20builder"
+    },
+    {
+      "level_1": "ai-automation",
+      "level_2": "customer-support-automation",
+      "slug": "customer-support-automation",
+      "hub": "hub-customer-support-automation.html",
+      "free": "free-customer-support-automation.html",
+      "usecase_example": "usecase-customer-support-automation-helpdesk.html",
+      "fallback_query_example": "vertical-template.html?intent=automation&category=watermark&kw=ai%20customer%20support%20automation"
+    }
+  ]
+}

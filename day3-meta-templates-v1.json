@@ -1,0 +1,45 @@
+{
+  "version": "v1",
+  "updated_at": "2026-04-11",
+  "description": "Reusable metadata templates for Day 3 page standardization.",
+  "variables": [
+    "{level2_name}",
+    "{intent_label}",
+    "{year}",
+    "{top_tool_1}",
+    "{top_tool_2}",
+    "{seed_keyword}"
+  ],
+  "templates": {
+    "hub": {
+      "title": "Best {level2_name} Tools ({year}) - AI Tool Lab",
+      "description": "Compare top {level2_name} tools with score-based ranking, practical recommendations, and direct links. Updated for {year}.",
+      "og_title": "Best {level2_name} Tools ({year})",
+      "og_description": "Objective ranking for {level2_name}: data-driven scores, quick picks, and official links."
+    },
+    "compare": {
+      "title": "{top_tool_1} vs {top_tool_2} for {level2_name} - Which One Is Better?",
+      "description": "Head-to-head comparison for {level2_name}: {top_tool_1} vs {top_tool_2} across quality, speed, free value, and automation.",
+      "og_title": "{top_tool_1} vs {top_tool_2}",
+      "og_description": "A practical side-by-side comparison with scoring logic and use-case recommendations."
+    },
+    "usecase": {
+      "title": "Best {level2_name} for {seed_keyword} ({year})",
+      "description": "Use-case focused picks for {level2_name}. See ranked options, strengths, and when to use each tool.",
+      "og_title": "{level2_name} Use-case Picks",
+      "og_description": "Scenario-based recommendations with clear scoring and quick official links."
+    },
+    "free": {
+      "title": "Free {level2_name} Tools ({year}) - Best Picks",
+      "description": "Free-first ranking for {level2_name} tools with notes on limits, quality, and upgrade trade-offs.",
+      "og_title": "Free {level2_name} Tools",
+      "og_description": "Find the best free options first, then compare paid upgrades when needed."
+    },
+    "automation": {
+      "title": "Best {level2_name} for Automation ({year})",
+      "description": "Automation-focused ranking for {level2_name}, emphasizing API support, batch workflow, and scalability.",
+      "og_title": "{level2_name} Automation Picks",
+      "og_description": "Choose tools for workflow automation with score-backed recommendations."
+    }
+  }
+}

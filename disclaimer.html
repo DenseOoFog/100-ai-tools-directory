@@ -13,8 +13,8 @@
     :root { --bg:#0b0b0c; --surface:#121214; --text:#f2f2f3; --muted:rgba(242,242,243,.65); --line:rgba(255,255,255,.12); }
     * { box-sizing:border-box; }
     body { margin:0; font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif; background:var(--bg); color:var(--text); line-height:1.7; }
-    .wrap { width:min(900px,92%); margin:0 auto; }
-    header, footer { border-bottom:1px solid var(--line); background:var(--surface); }
+    .wrap { width:100%; max-width:none; margin:0; padding:0 clamp(14px,3vw,34px); }
+    header, footer { border-bottom:1px solid var(--line); background:transparent; }
     footer { border-top:1px solid var(--line); border-bottom:0; margin-top:28px; }
     .nav { display:flex; justify-content:space-between; align-items:center; padding:14px 0; }
     .brand, nav a, footer a { color:var(--muted); text-decoration:none; }
