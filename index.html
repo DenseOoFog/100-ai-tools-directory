@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Tools Directory</title>
+  <meta name="description" content="Fast AI tools navigation with practical categories, free/freemium labels, and one-click outbound access." />
+  <meta name="robots" content="index,follow" />
+  <script defer src="/_vercel/insights/script.js"></script>
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --surface: #121214;
+      --surface-soft: #17171a;
+      --text: #f2f2f3;
+      --text-muted: rgba(242, 242, 243, 0.62);
+      --border: rgba(255, 255, 255, 0.11);
+      --border-strong: rgba(255, 255, 255, 0.28);
+      --hover: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(950px 420px at 100% -10%, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 62%),
+        radial-gradient(860px 380px at -10% -20%, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 60%),
+        var(--bg);
+      color: var(--text);
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 16px 56px;
+    }
+
+    .top {
+      border: 1px solid var(--border);
+      background: rgba(18, 18, 20, 0.8);
+      border-radius: 16px;
+      padding: 26px 20px;
+      margin-bottom: 22px;
+      backdrop-filter: blur(6px);
+      box-shadow: rgba(0, 0, 0, 0.45) 0 16px 36px;
+    }
+
+    .top-nav {
+      display: flex;
+      justify-content: flex-end;
+      gap: 14px;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+
+    .top-nav a,
+    .foot a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .top-nav a:hover,
+    .foot a:hover {
+      color: var(--text);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5.4vw, 72px);
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+      font-weight: 500;
+    }
+
+    .sub {
+      margin: 12px 0 0;
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 640px;
+    }
+
+    .bar {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .toolbar-line {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .search {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #0f0f11;
+      color: var(--text);
+      font-size: 15px;
+      padding: 12px 14px 13px;
+      outline: none;
+      transition: border-color .15s ease, box-shadow .2s ease;
+    }
+
+    .search:focus {
+      border-color: var(--border-strong);
+      box-shadow: rgba(0, 0, 0, 0.45) 0 10px 28px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: #111114;
+      color: var(--text-muted);
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: color .15s ease, border-color .15s ease, transform .15s ease, background .15s ease;
+    }
+
+    .chip:hover {
+      color: var(--text);
+      border-color: var(--border-strong);
+      background: #17171a;
+    }
+
+    .chip.active {
+      background: var(--text);
+      color: #09090a;
+      border-color: var(--text);
+    }
+
+    .chip.toggle-on {
+      background: #f2f2f3;
+      color: #0b0b0c;
+      border-color: #f2f2f3;
+      font-weight: 600;
+    }
+
+    .stats {
+      margin: 8px 0 0;
+      color: var(--text-muted);
+      font-size: 12px;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+
+    .grid {
+      column-count: 3;
+      column-gap: 12px;
+      margin-top: 16px;
+    }
+
+    .card {
+      text-decoration: none;
+      color: inherit;
+      background: linear-gradient(180deg, rgba(22, 22, 25, 0.95), rgba(16, 16, 18, 0.95));
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      min-height: 174px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      width: 100%;
+      margin: 0 0 12px;
+      break-inside: avoid;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      box-shadow: rgba(0, 0, 0, 0.35) 0 0 24px, rgba(0, 0, 0, 0.2) 0 0 8px;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 3px;
+      border-radius: 14px 0 0 14px;
+      background: rgba(255, 255, 255, 0.28);
+      opacity: .9;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-strong);
+      box-shadow: rgba(0, 0, 0, 0.58) 0 22px 56px, rgba(0, 0, 0, 0.34) 0 12px 30px;
+    }
+
+    .name {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      font-weight: 500;
+    }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .meta {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 3px 8px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .price {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 11px;
+      padding: 3px 8px;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+
+    .price.free {
+      color: #e8ffe8;
+      border-color: rgba(93, 197, 126, 0.5);
+      background: rgba(93, 197, 126, 0.14);
+    }
+
+    .price.freemium {
+      color: #fff1d0;
+      border-color: rgba(223, 171, 82, 0.5);
+      background: rgba(223, 171, 82, 0.16);
+    }
+
+    .price.paid {
+      color: #ffdfe1;
+      border-color: rgba(219, 111, 123, 0.5);
+      background: rgba(219, 111, 123, 0.16);
+    }
+
+    .desc {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text-muted);
+    }
+
+    .note {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.45;
+      color: rgba(242, 242, 243, 0.78);
+      border-top: 1px dashed rgba(255, 255, 255, 0.2);
+      padding-top: 8px;
+      flex: 1;
+    }
+
+    .jump {
+      margin-top: auto;
+      align-self: flex-end;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      color: rgba(242, 242, 243, 0.76);
+      background: rgba(255, 255, 255, 0.06);
+      transition: transform .15s ease, color .15s ease, border-color .15s ease;
+    }
+
+    .card:hover .jump {
+      transform: translate(1px, -1px);
+      color: var(--hover);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .empty {
+      display: none;
+      margin-top: 14px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .foot {
+      margin-top: 24px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    @media (max-width: 920px) {
+      .grid { column-count: 2; }
+    }
+    @media (max-width: 620px) {
+      .grid { column-count: 1; }
+      .page { padding-top: 24px; }
+      .toolbar-line { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="top">
+      <div class="top-nav">
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy-policy.html">Privacy</a>
+      </div>
+      <h1>AI Tools, Fast Jump</h1>
+      <p class="sub">No article. No click tax. Click any card to open.</p>
+      <div class="bar">
+        <input id="search" class="search" placeholder="Search by name or use case..." />
+        <div class="toolbar-line">
+          <div id="filters" class="chips"></div>
+          <div class="chips">
+            <button id="freeOnlyBtn" class="chip">Free only</button>
+            <button id="hotOnlyBtn" class="chip">Hot only</button>
+          </div>
+        </div>
+        <div id="stats" class="stats">0 tools</div>
+      </div>
+    </section>
+
+    <section id="grid" class="grid"></section>
+    <p id="empty" class="empty">No matching tools.</p>
+    <footer class="foot">
+      <span>Educational tool directory. Verify external services independently.</span>
+      <span>
+        <a href="privacy-policy.html">Privacy</a> ·
+        <a href="disclaimer.html">Disclaimer</a> ·
+        <a href="terms.html">Terms</a>
+      </span>
+    </footer>
+  </main>
+
+  <script>
+    const tools = [
+      { name: "ChatGPT", category: "LLM", pricing: "Freemium", hot: true, desc: "General AI assistant", note: "Strong for broad tasks and fast drafting workflows.", url: "https://chat.openai.com/" },
+      { name: "Claude", category: "LLM", pricing: "Freemium", hot: true, desc: "Long context assistant", note: "Good when you need cleaner writing tone and long document handling.", url: "https://claude.ai/" },
+      { name: "Gemini", category: "LLM", pricing: "Freemium", hot: true, desc: "Google AI assistant", url: "https://gemini.google.com/" },
+      { name: "Perplexity", category: "LLM", pricing: "Freemium", hot: true, desc: "Answer engine with sources", url: "https://www.perplexity.ai/" },
+      { name: "Poe", category: "LLM", pricing: "Freemium", desc: "Multi-model chat platform", url: "https://poe.com/" },
+
+      { name: "Notion AI", category: "Writing", pricing: "Freemium", desc: "AI writing in Notion docs", note: "Best if your team already runs docs and wiki in Notion.", url: "https://www.notion.so/product/ai" },
+      { name: "Grammarly", category: "Writing", pricing: "Freemium", hot: true, desc: "Rewrite and grammar helper", url: "https://www.grammarly.com/" },
+      { name: "Jasper", category: "Writing", pricing: "Paid", desc: "Marketing copy generation", url: "https://www.jasper.ai/" },
+      { name: "Copy.ai", category: "Writing", pricing: "Freemium", desc: "Sales and content drafts", url: "https://www.copy.ai/" },
+      { name: "QuillBot", category: "Writing", pricing: "Freemium", desc: "Paraphrasing and polishing", url: "https://quillbot.com/" },
+
+      { name: "Midjourney", category: "Image", pricing: "Paid", desc: "AI image generation", note: "High visual quality and style consistency for concept output.", url: "https://www.midjourney.com/" },
+      { name: "DALL-E", category: "Image", pricing: "Freemium", desc: "Image generation by OpenAI", url: "https://openai.com/dall-e/" },
+      { name: "Adobe Firefly", category: "Image", pricing: "Freemium", desc: "Creative AI image tools", url: "https://firefly.adobe.com/" },
+      { name: "Canva AI", category: "Image", pricing: "Freemium", hot: true, desc: "Design and AI image tools", url: "https://www.canva.com/ai-image-generator/" },
+      { name: "Leonardo AI", category: "Image", pricing: "Freemium", desc: "Game and concept visuals", url: "https://leonardo.ai/" },
+
+      { name: "Runway", category: "Video", pricing: "Freemium", desc: "AI video generation/editing", note: "Useful for quick visual ideation and short creative clips.", url: "https://runwayml.com/" },
+      { name: "Pika", category: "Video", pricing: "Freemium", desc: "Text to video generation", url: "https://pika.art/" },
+      { name: "CapCut", category: "Video", pricing: "Free", hot: true, desc: "Editing and AI effects", url: "https://www.capcut.com/" },
+      { name: "Descript", category: "Video", pricing: "Freemium", desc: "Edit audio/video by text", url: "https://www.descript.com/" },
+      { name: "ElevenLabs", category: "Video", pricing: "Freemium", desc: "AI voice generation", url: "https://elevenlabs.io/" },
+
+      { name: "Zapier", category: "Automation", pricing: "Freemium", hot: true, desc: "Workflow automation", note: "Large app ecosystem and beginner-friendly setup experience.", url: "https://zapier.com/" },
+      { name: "Make", category: "Automation", pricing: "Freemium", desc: "Visual automation builder", url: "https://www.make.com/" },
+      { name: "n8n", category: "Automation", pricing: "Freemium", desc: "Open automation platform", url: "https://n8n.io/" },
+      { name: "Airtable AI", category: "Automation", pricing: "Freemium", desc: "AI in data workflows", url: "https://www.airtable.com/" },
+      { name: "Coda AI", category: "Automation", pricing: "Freemium", desc: "Docs + automation workspace", url: "https://coda.io/" },
+
+      { name: "remove.bg", category: "Utility", pricing: "Free", hot: true, desc: "One-click image background remover", note: "A classic choice for quick background removal.", url: "https://www.remove.bg/" },
+      { name: "TinyPNG", category: "Utility", pricing: "Freemium", hot: true, desc: "Compress PNG and JPG quickly", url: "https://tinypng.com/" },
+      { name: "TinyWow", category: "Utility", pricing: "Free", desc: "PDF/image/video small tools", url: "https://tinywow.com/" },
+      { name: "iLovePDF", category: "Utility", pricing: "Freemium", hot: true, desc: "Merge, split, compress PDF", url: "https://www.ilovepdf.com/" },
+      { name: "Smallpdf", category: "Utility", pricing: "Freemium", desc: "PDF conversion and compression", url: "https://smallpdf.com/" },
+      { name: "Photopea", category: "Utility", pricing: "Free", hot: true, desc: "Web Photoshop alternative", url: "https://www.photopea.com/" },
+      { name: "EZGIF", category: "Utility", pricing: "Free", desc: "GIF/video quick conversion tools", url: "https://ezgif.com/" },
+      { name: "Cleanup.pictures", category: "Utility", pricing: "Freemium", desc: "Object removal from images", url: "https://cleanup.pictures/" },
+      { name: "Squoosh", category: "Utility", pricing: "Free", hot: true, desc: "Image compression by Google", url: "https://squoosh.app/" },
+      { name: "CloudConvert", category: "Utility", pricing: "Freemium", desc: "File format conversion online", url: "https://cloudconvert.com/" },
+      { name: "Canva Resize", category: "Utility", pricing: "Freemium", desc: "Quick social media resize", url: "https://www.canva.com/resize-image/" }
+    ];
+
+    const categories = ["All", ...new Set(tools.map(t => t.category))];
+    const filtersEl = document.getElementById("filters");
+    const freeOnlyBtn = document.getElementById("freeOnlyBtn");
+    const hotOnlyBtn = document.getElementById("hotOnlyBtn");
+    const searchEl = document.getElementById("search");
+    const gridEl = document.getElementById("grid");
+    const emptyEl = document.getElementById("empty");
+    const statsEl = document.getElementById("stats");
+    let activeCategory = "All";
+    let freeOnly = false;
+    let hotOnly = false;
+
+    categories.forEach(cat => {
+      const btn = document.createElement("button");
+      btn.className = "chip" + (cat === "All" ? " active" : "");
+      btn.textContent = cat;
+      btn.onclick = () => {
+        activeCategory = cat;
+        document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+        btn.classList.add("active");
+        render();
+      };
+      filtersEl.appendChild(btn);
+    });
+
+    searchEl.addEventListener("input", render);
+    freeOnlyBtn.addEventListener("click", () => {
+      freeOnly = !freeOnly;
+      freeOnlyBtn.classList.toggle("toggle-on", freeOnly);
+      render();
+    });
+    hotOnlyBtn.addEventListener("click", () => {
+      hotOnly = !hotOnly;
+      hotOnlyBtn.classList.toggle("toggle-on", hotOnly);
+      render();
+    });
+
+    function render() {
+      const kw = searchEl.value.trim().toLowerCase();
+      const filtered = tools.filter(item => {
+        const byCategory = activeCategory === "All" || item.category === activeCategory;
+        const byKeyword = !kw || (item.name + " " + item.desc).toLowerCase().includes(kw);
+        const byPrice = !freeOnly || item.pricing === "Free";
+        const byHot = !hotOnly || item.hot === true;
+        return byCategory && byKeyword && byPrice && byHot;
+      });
+
+      gridEl.innerHTML = "";
+      filtered.forEach(item => {
+        const card = document.createElement("a");
+        card.className = "card";
+        card.href = item.url;
+        card.target = "_blank";
+        card.rel = "noopener noreferrer";
+        const note = item.note ? `<p class="note">${item.note}</p>` : "";
+        const pricing = item.pricing || "Freemium";
+        const pricingClass = pricing.toLowerCase();
+        card.innerHTML = `
+          <h3 class="name">${item.name}</h3>
+          <div class="meta-row">
+            <span class="meta">${item.category}</span>
+            <span class="price ${pricingClass}">${pricing}</span>
+          </div>
+          <p class="desc">${item.desc}</p>
+          ${note}
+          <span class="jump" aria-hidden="true">↗</span>
+        `;
+        gridEl.appendChild(card);
+      });
+
+      const freeCount = filtered.filter(item => item.pricing === "Free").length;
+      const hotCount = filtered.filter(item => item.hot === true).length;
+      statsEl.textContent = `${filtered.length} tools · ${freeCount} free · ${hotCount} hot`;
+      emptyEl.style.display = filtered.length ? "none" : "block";
+    }
+
+    render();
+  </script>
+</body>
+</html>
