@@ -1,0 +1,295 @@
+{
+  "version": "v1",
+  "updated_at": "2026-04-11",
+  "scope": "tier_1_level_2_categories",
+  "categories": [
+    {
+      "level_1": "ai-image",
+      "level_2": "background-remover",
+      "seed_keywords": [
+        "best ai background remover",
+        "remove background from image online",
+        "free background remover",
+        "remove bg from product photo",
+        "bulk background remover",
+        "background remover api",
+        "ai cutout tool",
+        "remove background for ecommerce",
+        "remove white background png",
+        "background remover comparison"
+      ]
+    },
+    {
+      "level_1": "ai-image",
+      "level_2": "watermark-remover",
+      "seed_keywords": [
+        "ai watermark remover",
+        "remove watermark from image online",
+        "free watermark remover",
+        "best photo watermark remover",
+        "remove logo from image ai",
+        "watermark remover for product photos",
+        "batch watermark remover",
+        "object remover ai",
+        "inpaint watermark tool",
+        "watermark remover comparison"
+      ]
+    },
+    {
+      "level_1": "ai-image",
+      "level_2": "text-to-image",
+      "seed_keywords": [
+        "best ai image generator",
+        "text to image ai",
+        "free ai image generator",
+        "ai art generator online",
+        "midjourney alternatives",
+        "ai image generator for commercial use",
+        "fast ai image generation",
+        "photorealistic ai image generator",
+        "ai image generator comparison",
+        "best prompts for ai image generation"
+      ]
+    },
+    {
+      "level_1": "ai-video",
+      "level_2": "text-to-video",
+      "seed_keywords": [
+        "best text to video ai",
+        "ai video generator from text",
+        "free ai text to video",
+        "ai video generator comparison",
+        "text to video for tiktok",
+        "text to video for youtube shorts",
+        "fast ai video generation",
+        "runway vs pika",
+        "best ai video tool for creators",
+        "ai text to video with voice"
+      ]
+    },
+    {
+      "level_1": "ai-video",
+      "level_2": "subtitle-generator",
+      "seed_keywords": [
+        "ai subtitle generator",
+        "auto subtitle generator online",
+        "free subtitle generator",
+        "video captions ai",
+        "subtitle generator for reels",
+        "youtube subtitle generator ai",
+        "srt generator ai",
+        "subtitle translation ai",
+        "best auto caption tool",
+        "subtitle tools comparison"
+      ]
+    },
+    {
+      "level_1": "ai-video",
+      "level_2": "video-translator-dub",
+      "seed_keywords": [
+        "ai video translator",
+        "video dubbing ai",
+        "translate video language ai",
+        "free ai video translation",
+        "best ai dubbing tools",
+        "lip sync translation ai",
+        "youtube video translator ai",
+        "video dubbing comparison",
+        "multilingual video ai",
+        "ai voice dub tool"
+      ]
+    },
+    {
+      "level_1": "ai-writing",
+      "level_2": "ai-writer",
+      "seed_keywords": [
+        "best ai writer",
+        "ai writing tool for blogs",
+        "free ai writer",
+        "ai content writer comparison",
+        "long form ai writing tool",
+        "ai blog post generator",
+        "ai copywriter tool",
+        "seo ai writer",
+        "best ai writer for marketing",
+        "chatgpt alternatives for writing"
+      ]
+    },
+    {
+      "level_1": "ai-writing",
+      "level_2": "grammar-checker",
+      "seed_keywords": [
+        "best grammar checker",
+        "ai grammar checker",
+        "free grammar correction tool",
+        "grammarly alternatives",
+        "grammar checker for academic writing",
+        "online sentence correction",
+        "english grammar checker ai",
+        "rewrite and grammar tool",
+        "grammar tool comparison",
+        "proofreading ai tool"
+      ]
+    },
+    {
+      "level_1": "ai-writing",
+      "level_2": "email-writer",
+      "seed_keywords": [
+        "ai email writer",
+        "write professional email with ai",
+        "cold email generator ai",
+        "sales email generator",
+        "free ai email assistant",
+        "follow up email generator",
+        "customer support email ai",
+        "email rewrite ai",
+        "best email writing tool",
+        "email ai tool comparison"
+      ]
+    },
+    {
+      "level_1": "ai-seo",
+      "level_2": "keyword-research",
+      "seed_keywords": [
+        "best ai keyword research tool",
+        "keyword research ai",
+        "free keyword research tool",
+        "long tail keyword generator ai",
+        "seo keyword tool comparison",
+        "keyword clustering ai",
+        "low competition keywords finder",
+        "keyword research for beginners",
+        "ai seo keyword tool",
+        "best keyword research tools 2026"
+      ]
+    },
+    {
+      "level_1": "ai-seo",
+      "level_2": "content-brief-generator",
+      "seed_keywords": [
+        "ai content brief generator",
+        "seo brief generator",
+        "content outline ai",
+        "article brief ai tool",
+        "best ai content planning tool",
+        "topic cluster generator ai",
+        "content brief template ai",
+        "content brief software comparison",
+        "serp based content brief tool",
+        "ai seo outline generator"
+      ]
+    },
+    {
+      "level_1": "ai-seo",
+      "level_2": "meta-generator",
+      "seed_keywords": [
+        "meta title generator ai",
+        "meta description generator",
+        "seo title generator",
+        "free meta description tool",
+        "ai metadata generator",
+        "best meta tag generator",
+        "bulk meta description generator",
+        "clickworthy title ai",
+        "seo snippet optimizer ai",
+        "meta tag tool comparison"
+      ]
+    },
+    {
+      "level_1": "ai-productivity",
+      "level_2": "meeting-notes-summary",
+      "seed_keywords": [
+        "ai meeting notes",
+        "meeting summary ai",
+        "zoom meeting notes ai",
+        "google meet notes ai",
+        "free ai meeting assistant",
+        "best meeting notes tool",
+        "transcribe and summarize meeting ai",
+        "meeting notes automation",
+        "meeting assistant comparison",
+        "ai note taker for teams"
+      ]
+    },
+    {
+      "level_1": "ai-productivity",
+      "level_2": "pdf-chat",
+      "seed_keywords": [
+        "chat with pdf ai",
+        "pdf ai assistant",
+        "ask questions to pdf",
+        "free pdf chat tool",
+        "pdf summarizer ai",
+        "pdf q&a ai",
+        "best ai pdf tool",
+        "chatpdf alternatives",
+        "pdf chatbot comparison",
+        "ai document chat"
+      ]
+    },
+    {
+      "level_1": "ai-productivity",
+      "level_2": "document-summarizer",
+      "seed_keywords": [
+        "ai document summarizer",
+        "summarize long document ai",
+        "free text summarizer ai",
+        "pdf summary ai",
+        "research paper summarizer",
+        "best summarization tool",
+        "meeting transcript summarizer",
+        "article summary generator",
+        "summary ai comparison",
+        "automatic summarizer online"
+      ]
+    },
+    {
+      "level_1": "ai-automation",
+      "level_2": "workflow-automation",
+      "seed_keywords": [
+        "best workflow automation tools",
+        "ai workflow automation",
+        "zapier alternatives",
+        "make vs zapier",
+        "free workflow automation tool",
+        "no code automation platform",
+        "small business automation tools",
+        "automation workflow builder",
+        "workflow automation comparison",
+        "ai automation for creators"
+      ]
+    },
+    {
+      "level_1": "ai-automation",
+      "level_2": "agent-builder",
+      "seed_keywords": [
+        "ai agent builder",
+        "no code ai agent",
+        "build ai assistant workflow",
+        "best ai agent platforms",
+        "custom ai agent builder",
+        "multi step ai agent tool",
+        "ai automation agent comparison",
+        "agentic workflow builder",
+        "free ai agent platform",
+        "ai agent tools for business"
+      ]
+    },
+    {
+      "level_1": "ai-automation",
+      "level_2": "customer-support-automation",
+      "seed_keywords": [
+        "ai customer support automation",
+        "ai chatbot for support",
+        "helpdesk ai automation",
+        "automated customer service ai",
+        "best ai support tools",
+        "customer support chatbot comparison",
+        "faq chatbot ai",
+        "support ticket automation ai",
+        "free ai support chatbot",
+        "customer support ai software"
+      ]
+    }
+  ]
+}

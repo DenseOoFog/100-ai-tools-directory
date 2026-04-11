@@ -1,0 +1,164 @@
+{
+  "version": "v1",
+  "updated_at": "2026-04-11",
+  "site_positioning": "AI vertical comparison directory with interactive charts",
+  "priority_tiers": {
+    "tier_1": [
+      "ai-image",
+      "ai-video",
+      "ai-writing",
+      "ai-seo",
+      "ai-productivity",
+      "ai-automation"
+    ],
+    "tier_2": [
+      "ai-audio",
+      "ai-coding",
+      "ai-design",
+      "ai-business-ops"
+    ]
+  },
+  "level_1_categories": [
+    {
+      "id": "ai-image",
+      "name": "AI Image",
+      "intent": "high-volume utility and creator demand",
+      "level_2": [
+        "text-to-image",
+        "background-remover",
+        "watermark-remover",
+        "image-upscaler",
+        "product-photo-enhancer",
+        "face-swap"
+      ]
+    },
+    {
+      "id": "ai-video",
+      "name": "AI Video",
+      "intent": "short-video and creator production workflows",
+      "level_2": [
+        "text-to-video",
+        "ai-video-editor",
+        "subtitle-generator",
+        "video-translator-dub",
+        "avatar-video",
+        "long-to-short-repurpose"
+      ]
+    },
+    {
+      "id": "ai-writing",
+      "name": "AI Writing",
+      "intent": "daily writing tasks and business copy",
+      "level_2": [
+        "ai-writer",
+        "paraphraser",
+        "grammar-checker",
+        "email-writer",
+        "ad-copy-generator",
+        "essay-assistant"
+      ]
+    },
+    {
+      "id": "ai-seo",
+      "name": "AI SEO",
+      "intent": "commercial-intent search optimization",
+      "level_2": [
+        "keyword-research",
+        "content-brief-generator",
+        "seo-content-writer",
+        "meta-generator",
+        "internal-link-assistant",
+        "serp-analyzer"
+      ]
+    },
+    {
+      "id": "ai-productivity",
+      "name": "AI Productivity",
+      "intent": "office and knowledge work acceleration",
+      "level_2": [
+        "meeting-notes-summary",
+        "presentation-generator",
+        "spreadsheet-ai",
+        "pdf-chat",
+        "document-summarizer",
+        "knowledge-assistant"
+      ]
+    },
+    {
+      "id": "ai-automation",
+      "name": "AI Automation",
+      "intent": "workflow and operation automation",
+      "level_2": [
+        "workflow-automation",
+        "agent-builder",
+        "form-data-automation",
+        "customer-support-automation",
+        "web-scraping-ai",
+        "no-code-automation"
+      ]
+    },
+    {
+      "id": "ai-audio",
+      "name": "AI Audio",
+      "intent": "voice and podcast related use-cases",
+      "level_2": [
+        "text-to-speech",
+        "speech-to-text",
+        "voice-cloning",
+        "music-generator",
+        "noise-removal"
+      ]
+    },
+    {
+      "id": "ai-coding",
+      "name": "AI Coding",
+      "intent": "developer productivity and shipping speed",
+      "level_2": [
+        "code-assistant",
+        "debugging-assistant",
+        "sql-generator",
+        "test-generator",
+        "api-builder",
+        "doc-generator"
+      ]
+    },
+    {
+      "id": "ai-design",
+      "name": "AI Design",
+      "intent": "visual design and ui ideation",
+      "level_2": [
+        "ui-generator",
+        "wireframe-to-ui",
+        "icon-generator",
+        "banner-generator",
+        "mockup-generator",
+        "brand-kit-generator"
+      ]
+    },
+    {
+      "id": "ai-business-ops",
+      "name": "AI Business Ops",
+      "intent": "small business operational execution",
+      "level_2": [
+        "proposal-generator",
+        "contract-review",
+        "invoice-accounting-ai",
+        "hr-screening-ai",
+        "crm-assistant",
+        "analytics-assistant"
+      ]
+    }
+  ],
+  "url_pattern": {
+    "level_1": "/category/{level_1_id}/",
+    "level_2": "/category/{level_1_id}/{level_2_id}/"
+  },
+  "scoring_dimensions_default": [
+    "quality",
+    "speed",
+    "freeValue",
+    "automation",
+    "ease",
+    "batch"
+  ]
+}

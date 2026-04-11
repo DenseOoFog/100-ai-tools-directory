@@ -1,489 +1,792 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Tools Directory</title>
-  <meta name="description" content="Fast AI tools navigation with practical categories, free/freemium labels, and one-click outbound access." />
-  <meta name="robots" content="index,follow" />
-  <script defer src="/_vercel/insights/script.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Tool Lab - Vertical Comparison</title>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
   <style>
     :root {
       --bg: #0b0b0c;
-      --surface: #121214;
-      --surface-soft: #17171a;
-      --text: #f2f2f3;
-      --text-muted: rgba(242, 242, 243, 0.62);
-      --border: rgba(255, 255, 255, 0.11);
-      --border-strong: rgba(255, 255, 255, 0.28);
-      --hover: #ffffff;
+      --panel: #131316;
+      --line: rgba(255, 255, 255, 0.14);
+      --text: #f2f2f4;
+      --muted: rgba(242, 242, 244, 0.65);
     }
-
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-      background:
-        radial-gradient(950px 420px at 100% -10%, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 62%),
-        radial-gradient(860px 380px at -10% -20%, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 60%),
-        var(--bg);
       color: var(--text);
+      background:
+        radial-gradient(900px 380px at 110% -10%, rgba(255,255,255,0.1), rgba(255,255,255,0)),
+        radial-gradient(900px 380px at -10% -30%, rgba(255,255,255,0.06), rgba(255,255,255,0)),
+        var(--bg);
     }
-
-    .page {
+    .wrap {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 30px 16px 56px;
+      padding: 34px 20px 60px;
     }
-
-    .top {
-      border: 1px solid var(--border);
-      background: rgba(18, 18, 20, 0.8);
-      border-radius: 16px;
-      padding: 26px 20px;
-      margin-bottom: 22px;
-      backdrop-filter: blur(6px);
-      box-shadow: rgba(0, 0, 0, 0.45) 0 16px 36px;
+    .hero {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(20,20,23,0.84);
+      padding: 22px;
+      margin-bottom: 18px;
     }
-
-    .top-nav {
-      display: flex;
-      justify-content: flex-end;
-      gap: 14px;
-      margin-bottom: 16px;
-      font-size: 13px;
-    }
-
-    .top-nav a,
-    .foot a {
-      color: var(--text-muted);
-      text-decoration: none;
-    }
-
-    .top-nav a:hover,
-    .foot a:hover {
-      color: var(--text);
-    }
-
     h1 {
       margin: 0;
-      font-size: clamp(34px, 5.4vw, 72px);
-      line-height: 1.08;
-      letter-spacing: -0.045em;
-      font-weight: 500;
+      font-size: clamp(28px, 5vw, 52px);
+      letter-spacing: -0.035em;
+      font-weight: 600;
     }
-
     .sub {
       margin: 12px 0 0;
-      color: var(--text-muted);
-      font-size: 15px;
-      max-width: 640px;
+      color: var(--muted);
+      font-size: 14px;
     }
-
-    .bar {
+    .row {
       display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .control-block {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .control-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--muted);
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .search-input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #0f1012;
+      color: var(--text);
+      font-size: 13px;
+      padding: 9px 10px;
+      outline: none;
+    }
+    .search-input:focus { border-color: rgba(255,255,255,0.35); }
+    .btn {
+      border: 1px solid var(--line);
+      background: #101013;
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 6px 11px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .btn.active {
+      background: #f2f2f4;
+      color: #0a0a0b;
+      border-color: #f2f2f4;
+      font-weight: 700;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(19,19,22,0.9), rgba(12,12,14,0.9));
+      padding: 16px;
+    }
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .chart {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      min-height: 400px;
+      background: rgba(255,255,255,0.02);
+    }
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
       margin-top: 16px;
     }
-
-    .toolbar-line {
-      display: flex;
+    .insight-grid {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 12px;
+    }
+    .insight-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.03);
+      padding: 12px;
+      display: grid;
       gap: 10px;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
     }
-
-    .search {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: #0f0f11;
+    .insight-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--muted);
+    }
+    .meta-line {
+      font-size: 12px;
       color: var(--text);
-      font-size: 15px;
-      padding: 12px 14px 13px;
-      outline: none;
-      transition: border-color .15s ease, box-shadow .2s ease;
+      line-height: 1.45;
     }
-
-    .search:focus {
-      border-color: var(--border-strong);
-      box-shadow: rgba(0, 0, 0, 0.45) 0 10px 28px;
+    .route-anchor {
+      margin-top: 4px;
+      display: inline-block;
+      font-size: 11px;
+      color: #cfe7ff;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 10px;
+      background: rgba(135,196,255,0.12);
     }
-
-    .chips {
+    .route-anchor:hover { color: #ffffff; border-color: rgba(255,255,255,0.42); }
+    .meta-line b {
+      color: #d9eeff;
+      font-weight: 700;
+    }
+    .chip-list {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
     }
-
     .chip {
-      border: 1px solid var(--border);
-      background: #111114;
-      color: var(--text-muted);
+      border: 1px solid var(--line);
       border-radius: 999px;
-      padding: 5px 12px;
-      font-size: 13px;
+      padding: 4px 9px;
+      font-size: 11px;
+      color: var(--muted);
+      background: #101013;
       cursor: pointer;
-      transition: color .15s ease, border-color .15s ease, transform .15s ease, background .15s ease;
     }
-
     .chip:hover {
       color: var(--text);
-      border-color: var(--border-strong);
-      background: #17171a;
+      border-color: rgba(255,255,255,0.42);
     }
-
-    .chip.active {
-      background: var(--text);
-      color: #09090a;
-      border-color: var(--text);
+    .score-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.03);
+      padding: 12px;
     }
-
-    .chip.toggle-on {
-      background: #f2f2f3;
-      color: #0b0b0c;
-      border-color: #f2f2f3;
-      font-weight: 600;
+    .score-card h3 {
+      margin: 0 0 8px;
+      font-size: 14px;
     }
-
-    .stats {
-      margin: 8px 0 0;
-      color: var(--text-muted);
+    .score-card p {
+      margin: 0;
+      color: var(--muted);
       font-size: 12px;
-      letter-spacing: .02em;
-      text-transform: uppercase;
+      line-height: 1.45;
     }
-
-    .grid {
-      column-count: 3;
-      column-gap: 12px;
-      margin-top: 16px;
-    }
-
-    .card {
+    .score-link {
+      margin-top: 8px;
+      display: inline-block;
+      font-size: 11px;
+      color: #cfe7ff;
       text-decoration: none;
-      color: inherit;
-      background: linear-gradient(180deg, rgba(22, 22, 25, 0.95), rgba(16, 16, 18, 0.95));
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      min-height: 174px;
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      position: relative;
-      width: 100%;
-      margin: 0 0 12px;
-      break-inside: avoid;
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-      box-shadow: rgba(0, 0, 0, 0.35) 0 0 24px, rgba(0, 0, 0, 0.2) 0 0 8px;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0 auto 0 0;
-      width: 3px;
-      border-radius: 14px 0 0 14px;
-      background: rgba(255, 255, 255, 0.28);
-      opacity: .9;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: var(--border-strong);
-      box-shadow: rgba(0, 0, 0, 0.58) 0 22px 56px, rgba(0, 0, 0, 0.34) 0 12px 30px;
-    }
-
-    .name {
-      margin: 0;
-      font-size: 22px;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-      font-weight: 500;
-    }
-
-    .meta-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .meta {
-      display: inline-flex;
-      align-items: center;
-      width: fit-content;
+      border: 1px solid var(--line);
       border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.06);
-      font-size: 11px;
-      color: var(--text-muted);
       padding: 3px 8px;
-      text-transform: uppercase;
-      letter-spacing: .04em;
+      background: rgba(135,196,255,0.12);
     }
-
-    .price {
-      display: inline-flex;
-      align-items: center;
-      width: fit-content;
+    .score-link:hover { color: #ffffff; border-color: rgba(255,255,255,0.4); }
+    .score {
+      display: inline-block;
+      margin-top: 10px;
+      border: 1px solid var(--line);
       border-radius: 999px;
-      border: 1px solid var(--border);
+      padding: 2px 7px;
       font-size: 11px;
-      padding: 3px 8px;
-      letter-spacing: .03em;
-      text-transform: uppercase;
+      color: #dbf2ff;
+      background: rgba(135,196,255,0.15);
     }
-
-    .price.free {
-      color: #e8ffe8;
-      border-color: rgba(93, 197, 126, 0.5);
-      background: rgba(93, 197, 126, 0.14);
-    }
-
-    .price.freemium {
-      color: #fff1d0;
-      border-color: rgba(223, 171, 82, 0.5);
-      background: rgba(223, 171, 82, 0.16);
-    }
-
-    .price.paid {
-      color: #ffdfe1;
-      border-color: rgba(219, 111, 123, 0.5);
-      background: rgba(219, 111, 123, 0.16);
-    }
-
-    .desc {
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.45;
-      color: var(--text-muted);
-    }
-
-    .note {
-      margin: 0;
-      font-size: 12px;
-      line-height: 1.45;
-      color: rgba(242, 242, 243, 0.78);
-      border-top: 1px dashed rgba(255, 255, 255, 0.2);
-      padding-top: 8px;
-      flex: 1;
-    }
-
-    .jump {
-      margin-top: auto;
-      align-self: flex-end;
-      width: 30px;
-      height: 30px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      display: grid;
-      place-items: center;
-      font-size: 13px;
-      color: rgba(242, 242, 243, 0.76);
-      background: rgba(255, 255, 255, 0.06);
-      transition: transform .15s ease, color .15s ease, border-color .15s ease;
-    }
-
-    .card:hover .jump {
-      transform: translate(1px, -1px);
-      color: var(--hover);
-      border-color: rgba(255, 255, 255, 0.4);
-    }
-
-    .empty {
-      display: none;
-      margin-top: 14px;
-      color: var(--text-muted);
-      font-size: 14px;
-    }
-
-    .foot {
-      margin-top: 24px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      font-size: 12px;
-      color: var(--text-muted);
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    @media (max-width: 920px) {
-      .grid { column-count: 2; }
+    @media (max-width: 900px) {
+      .chart-grid { grid-template-columns: 1fr; }
+      .insight-grid { grid-template-columns: 1fr; }
+      .score-grid { grid-template-columns: 1fr 1fr; }
+      .chart { min-height: 360px; }
     }
     @media (max-width: 620px) {
-      .grid { column-count: 1; }
-      .page { padding-top: 24px; }
-      .toolbar-line { flex-direction: column; align-items: flex-start; }
+      .score-grid { grid-template-columns: 1fr; }
+      .wrap { padding: 24px 14px 44px; }
+      .hero { padding: 16px; }
     }
   </style>
 </head>
 <body>
-  <main class="page">
-    <section class="top">
-      <div class="top-nav">
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="privacy-policy.html">Privacy</a>
-      </div>
-      <h1>AI Tools, Fast Jump</h1>
-      <p class="sub">No article. No click tax. Click any card to open.</p>
-      <div class="bar">
-        <input id="search" class="search" placeholder="Search by name or use case..." />
-        <div class="toolbar-line">
-          <div id="filters" class="chips"></div>
-          <div class="chips">
-            <button id="freeOnlyBtn" class="chip">Free only</button>
-            <button id="hotOnlyBtn" class="chip">Hot only</button>
-          </div>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Vertical Tool Comparison Lab</h1>
+      <p class="sub">Small categories, multi-dimensional scoring, switchable chart views, and keyword-intent navigation.</p>
+      <div class="row">
+        <div class="control-block">
+          <div class="control-label">Tool Search</div>
+          <input id="toolSearch" class="search-input" placeholder="Search tool name..." />
         </div>
-        <div id="stats" class="stats">0 tools</div>
+        <div class="control-block">
+          <div class="control-label">Level 1 Category</div>
+          <div id="level1Btns" class="toolbar"></div>
+        </div>
+        <div class="control-block">
+          <div class="control-label">Vertical Category</div>
+          <div id="categoryBtns" class="toolbar"></div>
+        </div>
+        <div class="control-block">
+          <div class="control-label">Chart Type</div>
+          <div id="chartTypeBtns" class="toolbar"></div>
+        </div>
+        <div class="control-block">
+          <div class="control-label">Parameter Profile</div>
+          <div id="modeBtns" class="toolbar"></div>
+        </div>
+        <div class="control-block">
+          <div class="control-label">Keyword Intent</div>
+          <div id="intentBtns" class="toolbar"></div>
+        </div>
       </div>
     </section>
 
-    <section id="grid" class="grid"></section>
-    <p id="empty" class="empty">No matching tools.</p>
-    <footer class="foot">
-      <span>Educational tool directory. Verify external services independently.</span>
-      <span>
-        <a href="privacy-policy.html">Privacy</a> ·
-        <a href="disclaimer.html">Disclaimer</a> ·
-        <a href="terms.html">Terms</a>
-      </span>
-    </footer>
+    <section class="panel">
+      <div class="chart-grid">
+        <div id="mainChart" class="chart"></div>
+        <div id="rankChart" class="chart"></div>
+      </div>
+      <div class="insight-grid">
+        <article class="insight-card">
+          <div class="insight-title">Intent to Page Mapping</div>
+          <div id="pageTypeHint" class="meta-line"></div>
+          <div id="chartHint" class="meta-line"></div>
+          <div id="routeHint" class="meta-line"></div>
+          <a id="routeAnchor" class="route-anchor" href="#" target="_blank" rel="noopener noreferrer">Open Suggested Page</a>
+        </article>
+        <article class="insight-card">
+          <div class="insight-title">Seed Keywords (Click to Use)</div>
+          <div id="seedChips" class="chip-list"></div>
+        </article>
+      </div>
+      <div id="recoCards" class="score-grid"></div>
+    </section>
   </main>
 
   <script>
-    const tools = [
-      { name: "ChatGPT", category: "LLM", pricing: "Freemium", hot: true, desc: "General AI assistant", note: "Strong for broad tasks and fast drafting workflows.", url: "https://chat.openai.com/" },
-      { name: "Claude", category: "LLM", pricing: "Freemium", hot: true, desc: "Long context assistant", note: "Good when you need cleaner writing tone and long document handling.", url: "https://claude.ai/" },
-      { name: "Gemini", category: "LLM", pricing: "Freemium", hot: true, desc: "Google AI assistant", url: "https://gemini.google.com/" },
-      { name: "Perplexity", category: "LLM", pricing: "Freemium", hot: true, desc: "Answer engine with sources", url: "https://www.perplexity.ai/" },
-      { name: "Poe", category: "LLM", pricing: "Freemium", desc: "Multi-model chat platform", url: "https://poe.com/" },
+    const level1Meta = {
+      creation: { label: "Creation", children: ["text2image"] },
+      enhancement: { label: "Image Enhancement", children: ["bgremove", "watermark"] }
+    };
 
-      { name: "Notion AI", category: "Writing", pricing: "Freemium", desc: "AI writing in Notion docs", note: "Best if your team already runs docs and wiki in Notion.", url: "https://www.notion.so/product/ai" },
-      { name: "Grammarly", category: "Writing", pricing: "Freemium", hot: true, desc: "Rewrite and grammar helper", url: "https://www.grammarly.com/" },
-      { name: "Jasper", category: "Writing", pricing: "Paid", desc: "Marketing copy generation", url: "https://www.jasper.ai/" },
-      { name: "Copy.ai", category: "Writing", pricing: "Freemium", desc: "Sales and content drafts", url: "https://www.copy.ai/" },
-      { name: "QuillBot", category: "Writing", pricing: "Freemium", desc: "Paraphrasing and polishing", url: "https://quillbot.com/" },
+    const categoryMeta = {
+      text2image: { label: "Text-to-Image", level1: "creation" },
+      bgremove: { label: "Background Removal", level1: "enhancement" },
+      watermark: { label: "Watermark Removal", level1: "enhancement" }
+    };
 
-      { name: "Midjourney", category: "Image", pricing: "Paid", desc: "AI image generation", note: "High visual quality and style consistency for concept output.", url: "https://www.midjourney.com/" },
-      { name: "DALL-E", category: "Image", pricing: "Freemium", desc: "Image generation by OpenAI", url: "https://openai.com/dall-e/" },
-      { name: "Adobe Firefly", category: "Image", pricing: "Freemium", desc: "Creative AI image tools", url: "https://firefly.adobe.com/" },
-      { name: "Canva AI", category: "Image", pricing: "Freemium", hot: true, desc: "Design and AI image tools", url: "https://www.canva.com/ai-image-generator/" },
-      { name: "Leonardo AI", category: "Image", pricing: "Freemium", desc: "Game and concept visuals", url: "https://leonardo.ai/" },
+    const datasets = {
+      text2image: [
+        { tool: "Midjourney", url: "https://www.midjourney.com/", quality: 9.4, speed: 7.6, freeValue: 2.0, automation: 4.8, ease: 7.3, batch: 7.2, note: "Best visual quality and style consistency." },
+        { tool: "Leonardo", url: "https://leonardo.ai/", quality: 8.4, speed: 8.1, freeValue: 7.8, automation: 6.0, ease: 8.2, batch: 7.1, note: "Strong free tier and creator workflow." },
+        { tool: "DALL-E", url: "https://openai.com/dall-e/", quality: 8.2, speed: 8.9, freeValue: 6.2, automation: 7.1, ease: 8.7, batch: 6.3, note: "Fast generation and good prompt following." },
+        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 7.4, speed: 8.8, freeValue: 7.1, automation: 3.9, ease: 9.4, batch: 5.1, note: "Easiest for quick social media assets." }
+      ],
+      bgremove: [
+        { tool: "remove.bg", url: "https://www.remove.bg/", quality: 9.1, speed: 9.3, freeValue: 7.4, automation: 8.8, ease: 9.4, batch: 7.8, note: "Most reliable for product and portrait cutouts." },
+        { tool: "Cleanup.pictures", url: "https://cleanup.pictures/", quality: 8.2, speed: 8.1, freeValue: 8.1, automation: 4.0, ease: 8.6, batch: 5.6, note: "Great for object cleanup and retouching." },
+        { tool: "Photopea", url: "https://www.photopea.com/", quality: 7.2, speed: 6.3, freeValue: 9.2, automation: 2.1, ease: 6.4, batch: 4.2, note: "Free-heavy but more manual operations." },
+        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 7.8, speed: 8.4, freeValue: 7.0, automation: 3.8, ease: 8.9, batch: 6.3, note: "Fast and easy for creator workflows." }
+      ],
+      watermark: [
+        { tool: "Cleanup.pictures", url: "https://cleanup.pictures/", quality: 8.0, speed: 8.2, freeValue: 8.2, automation: 3.9, ease: 8.7, batch: 5.3, note: "Solid visual cleanup quality for many cases." },
+        { tool: "Photopea", url: "https://www.photopea.com/", quality: 7.9, speed: 6.1, freeValue: 9.0, automation: 2.0, ease: 6.0, batch: 4.0, note: "Manual but controllable for harder edits." },
+        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 6.8, speed: 8.7, freeValue: 7.1, automation: 3.4, ease: 9.1, batch: 5.0, note: "Easy starter option for light edits." },
+        { tool: "Inpaint", url: "https://theinpaint.com/", quality: 7.3, speed: 7.8, freeValue: 5.6, automation: 1.8, ease: 7.5, batch: 3.5, note: "Focused simple inpainting experience." }
+      ]
+    };
 
-      { name: "Runway", category: "Video", pricing: "Freemium", desc: "AI video generation/editing", note: "Useful for quick visual ideation and short creative clips.", url: "https://runwayml.com/" },
-      { name: "Pika", category: "Video", pricing: "Freemium", desc: "Text to video generation", url: "https://pika.art/" },
-      { name: "CapCut", category: "Video", pricing: "Free", hot: true, desc: "Editing and AI effects", url: "https://www.capcut.com/" },
-      { name: "Descript", category: "Video", pricing: "Freemium", desc: "Edit audio/video by text", url: "https://www.descript.com/" },
-      { name: "ElevenLabs", category: "Video", pricing: "Freemium", desc: "AI voice generation", url: "https://elevenlabs.io/" },
-
-      { name: "Zapier", category: "Automation", pricing: "Freemium", hot: true, desc: "Workflow automation", note: "Large app ecosystem and beginner-friendly setup experience.", url: "https://zapier.com/" },
-      { name: "Make", category: "Automation", pricing: "Freemium", desc: "Visual automation builder", url: "https://www.make.com/" },
-      { name: "n8n", category: "Automation", pricing: "Freemium", desc: "Open automation platform", url: "https://n8n.io/" },
-      { name: "Airtable AI", category: "Automation", pricing: "Freemium", desc: "AI in data workflows", url: "https://www.airtable.com/" },
-      { name: "Coda AI", category: "Automation", pricing: "Freemium", desc: "Docs + automation workspace", url: "https://coda.io/" },
-
-      { name: "remove.bg", category: "Utility", pricing: "Free", hot: true, desc: "One-click image background remover", note: "A classic choice for quick background removal.", url: "https://www.remove.bg/" },
-      { name: "TinyPNG", category: "Utility", pricing: "Freemium", hot: true, desc: "Compress PNG and JPG quickly", url: "https://tinypng.com/" },
-      { name: "TinyWow", category: "Utility", pricing: "Free", desc: "PDF/image/video small tools", url: "https://tinywow.com/" },
-      { name: "iLovePDF", category: "Utility", pricing: "Freemium", hot: true, desc: "Merge, split, compress PDF", url: "https://www.ilovepdf.com/" },
-      { name: "Smallpdf", category: "Utility", pricing: "Freemium", desc: "PDF conversion and compression", url: "https://smallpdf.com/" },
-      { name: "Photopea", category: "Utility", pricing: "Free", hot: true, desc: "Web Photoshop alternative", url: "https://www.photopea.com/" },
-      { name: "EZGIF", category: "Utility", pricing: "Free", desc: "GIF/video quick conversion tools", url: "https://ezgif.com/" },
-      { name: "Cleanup.pictures", category: "Utility", pricing: "Freemium", desc: "Object removal from images", url: "https://cleanup.pictures/" },
-      { name: "Squoosh", category: "Utility", pricing: "Free", hot: true, desc: "Image compression by Google", url: "https://squoosh.app/" },
-      { name: "CloudConvert", category: "Utility", pricing: "Freemium", desc: "File format conversion online", url: "https://cloudconvert.com/" },
-      { name: "Canva Resize", category: "Utility", pricing: "Freemium", desc: "Quick social media resize", url: "https://www.canva.com/resize-image/" }
+    const chartTypes = [
+      { key: "radar", label: "Radar" },
+      { key: "bar", label: "Rank Bar" },
+      { key: "bubble", label: "Bubble" },
+      { key: "parallel", label: "Parallel" },
+      { key: "rose", label: "Rose" }
     ];
 
-    const categories = ["All", ...new Set(tools.map(t => t.category))];
-    const filtersEl = document.getElementById("filters");
-    const freeOnlyBtn = document.getElementById("freeOnlyBtn");
-    const hotOnlyBtn = document.getElementById("hotOnlyBtn");
-    const searchEl = document.getElementById("search");
-    const gridEl = document.getElementById("grid");
-    const emptyEl = document.getElementById("empty");
-    const statsEl = document.getElementById("stats");
-    let activeCategory = "All";
-    let freeOnly = false;
-    let hotOnly = false;
+    const intentMap = {
+      tools: { label: "Tools", pageType: "Vertical Category Hub", chartType: "bar" },
+      compare: { label: "Compare", pageType: "Comparison Page", chartType: "radar" },
+      usecase: { label: "Use-case", pageType: "Use-case Landing Page", chartType: "bubble" },
+      free: { label: "Free-first", pageType: "Free-first Collection Page", chartType: "rose" },
+      automation: { label: "Automation", pageType: "Automation-focused Page", chartType: "parallel" }
+    };
 
-    categories.forEach(cat => {
-      const btn = document.createElement("button");
-      btn.className = "chip" + (cat === "All" ? " active" : "");
-      btn.textContent = cat;
-      btn.onclick = () => {
-        activeCategory = cat;
-        document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
-        btn.classList.add("active");
-        render();
-      };
-      filtersEl.appendChild(btn);
-    });
+    const keywordSeeds = {
+      text2image: [
+        "best ai image generator",
+        "text to image ai",
+        "free ai image generator",
+        "midjourney alternatives",
+        "ai image generator comparison"
+      ],
+      bgremove: [
+        "best ai background remover",
+        "remove background from image online",
+        "free background remover",
+        "background remover api",
+        "background remover comparison"
+      ],
+      watermark: [
+        "ai watermark remover",
+        "remove watermark from image online",
+        "free watermark remover",
+        "object remover ai",
+        "watermark remover comparison"
+      ]
+    };
 
-    searchEl.addEventListener("input", render);
-    freeOnlyBtn.addEventListener("click", () => {
-      freeOnly = !freeOnly;
-      freeOnlyBtn.classList.toggle("toggle-on", freeOnly);
-      render();
-    });
-    hotOnlyBtn.addEventListener("click", () => {
-      hotOnly = !hotOnly;
-      hotOnlyBtn.classList.toggle("toggle-on", hotOnly);
-      render();
-    });
+    const modes = {
+      balanced: { label: "Balanced", weights: { quality: .24, speed: .18, freeValue: .18, automation: .12, ease: .14, batch: .14 } },
+      freeFirst: { label: "Free-first", weights: { quality: .14, speed: .14, freeValue: .34, automation: .08, ease: .18, batch: .12 } },
+      qualityFirst: { label: "Quality-first", weights: { quality: .38, speed: .15, freeValue: .08, automation: .10, ease: .14, batch: .15 } },
+      automationFirst: { label: "Automation-first", weights: { quality: .15, speed: .13, freeValue: .07, automation: .30, ease: .12, batch: .23 } },
+      speedFirst: { label: "Speed-first", weights: { quality: .17, speed: .34, freeValue: .12, automation: .10, ease: .15, batch: .12 } },
+      easeFirst: { label: "Ease-first", weights: { quality: .16, speed: .16, freeValue: .14, automation: .08, ease: .32, batch: .14 } },
+      batchFirst: { label: "Batch-first", weights: { quality: .18, speed: .15, freeValue: .08, automation: .16, ease: .10, batch: .33 } }
+    };
 
-    function render() {
-      const kw = searchEl.value.trim().toLowerCase();
-      const filtered = tools.filter(item => {
-        const byCategory = activeCategory === "All" || item.category === activeCategory;
-        const byKeyword = !kw || (item.name + " " + item.desc).toLowerCase().includes(kw);
-        const byPrice = !freeOnly || item.pricing === "Free";
-        const byHot = !hotOnly || item.hot === true;
-        return byCategory && byKeyword && byPrice && byHot;
-      });
+    const indicators = [
+      { name: "Quality", key: "quality", max: 10 },
+      { name: "Speed", key: "speed", max: 10 },
+      { name: "Free Value", key: "freeValue", max: 10 },
+      { name: "Automation", key: "automation", max: 10 },
+      { name: "Ease", key: "ease", max: 10 },
+      { name: "Batch", key: "batch", max: 10 }
+    ];
 
-      gridEl.innerHTML = "";
-      filtered.forEach(item => {
-        const card = document.createElement("a");
-        card.className = "card";
-        card.href = item.url;
-        card.target = "_blank";
-        card.rel = "noopener noreferrer";
-        const note = item.note ? `<p class="note">${item.note}</p>` : "";
-        const pricing = item.pricing || "Freemium";
-        const pricingClass = pricing.toLowerCase();
-        card.innerHTML = `
-          <h3 class="name">${item.name}</h3>
-          <div class="meta-row">
-            <span class="meta">${item.category}</span>
-            <span class="price ${pricingClass}">${pricing}</span>
-          </div>
-          <p class="desc">${item.desc}</p>
-          ${note}
-          <span class="jump" aria-hidden="true">↗</span>
-        `;
-        gridEl.appendChild(card);
-      });
+    let activeLevel1 = "enhancement";
+    let activeCategory = "bgremove";
+    let activeChartType = "bubble";
+    let activeMode = "balanced";
+    let activeIntent = "tools";
+    let activeSeed = "";
+    let searchTerm = "";
+    const mainChart = echarts.init(document.getElementById("mainChart"));
+    const rankChart = echarts.init(document.getElementById("rankChart"));
 
-      const freeCount = filtered.filter(item => item.pricing === "Free").length;
-      const hotCount = filtered.filter(item => item.hot === true).length;
-      statsEl.textContent = `${filtered.length} tools · ${freeCount} free · ${hotCount} hot`;
-      emptyEl.style.display = filtered.length ? "none" : "block";
+    function scoreItem(item, weights) {
+      return indicators.reduce((sum, dim) => sum + item[dim.key] * weights[dim.key], 0);
     }
 
-    render();
+    function scoredData() {
+      const weights = modes[activeMode].weights;
+      return datasets[activeCategory]
+        .filter(item => !searchTerm || item.tool.toLowerCase().includes(searchTerm))
+        .map(item => ({ ...item, score: Number(scoreItem(item, weights).toFixed(2)) }))
+        .sort((a, b) => b.score - a.score);
+    }
+
+    function renderButtons() {
+      const l1Wrap = document.getElementById("level1Btns");
+      l1Wrap.innerHTML = "";
+      Object.entries(level1Meta).forEach(([key, group]) => {
+        const btn = document.createElement("button");
+        btn.className = "btn" + (activeLevel1 === key ? " active" : "");
+        btn.textContent = group.label;
+        btn.onclick = () => {
+          activeLevel1 = key;
+          activeSeed = "";
+          const nextChildren = level1Meta[activeLevel1].children;
+          if (!nextChildren.includes(activeCategory)) {
+            activeCategory = nextChildren[0];
+          }
+          update();
+        };
+        l1Wrap.appendChild(btn);
+      });
+
+      const catWrap = document.getElementById("categoryBtns");
+      catWrap.innerHTML = "";
+      const l2List = Object.entries(categoryMeta).filter(([, meta]) => meta.level1 === activeLevel1);
+      l2List.forEach(([key, meta]) => {
+        const btn = document.createElement("button");
+        btn.className = "btn" + (activeCategory === key ? " active" : "");
+        btn.textContent = meta.label;
+        btn.onclick = () => { activeCategory = key; activeSeed = ""; update(); };
+        catWrap.appendChild(btn);
+      });
+
+      const typeWrap = document.getElementById("chartTypeBtns");
+      typeWrap.innerHTML = "";
+      chartTypes.forEach(type => {
+        const btn = document.createElement("button");
+        btn.className = "btn" + (activeChartType === type.key ? " active" : "");
+        btn.textContent = type.label;
+        btn.onclick = () => { activeChartType = type.key; update(); };
+        typeWrap.appendChild(btn);
+      });
+
+      const modeWrap = document.getElementById("modeBtns");
+      modeWrap.innerHTML = "";
+      Object.entries(modes).forEach(([key, mode]) => {
+        const btn = document.createElement("button");
+        btn.className = "btn" + (activeMode === key ? " active" : "");
+        btn.textContent = mode.label;
+        btn.onclick = () => { activeMode = key; update(); };
+        modeWrap.appendChild(btn);
+      });
+
+      const intentWrap = document.getElementById("intentBtns");
+      intentWrap.innerHTML = "";
+      Object.entries(intentMap).forEach(([key, intent]) => {
+        const btn = document.createElement("button");
+        btn.className = "btn" + (activeIntent === key ? " active" : "");
+        btn.textContent = intent.label;
+        btn.onclick = () => {
+          activeIntent = key;
+          activeChartType = intent.chartType;
+          update();
+        };
+        intentWrap.appendChild(btn);
+      });
+    }
+
+    function categorySlug() {
+      const raw = categoryMeta[activeCategory].label.toLowerCase();
+      return raw.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    }
+
+    function renderInsights(rows) {
+      const pageType = intentMap[activeIntent].pageType;
+      const chartType = chartTypes.find(type => type.key === activeChartType)?.label || "Rank Bar";
+      const slug = categorySlug();
+      const defaultSeed = (keywordSeeds[activeCategory] && keywordSeeds[activeCategory][0]) || "";
+      const selectedSeed = activeSeed || defaultSeed;
+      const topA = rows[0]?.tool || "";
+      const topB = rows[1]?.tool || "";
+      let route = `route-view.html?intent=${encodeURIComponent(activeIntent)}&category=${encodeURIComponent(activeCategory)}&slug=${encodeURIComponent(slug)}`;
+      if (selectedSeed) route = `${route}&kw=${encodeURIComponent(selectedSeed)}`;
+      if (activeIntent === "compare" && topA && topB) {
+        route = `${route}&a=${encodeURIComponent(topA)}&b=${encodeURIComponent(topB)}`;
+      }
+
+      document.getElementById("pageTypeHint").innerHTML = `Page Type: <b>${pageType}</b>`;
+      document.getElementById("chartHint").innerHTML = `Recommended Chart: <b>${chartType}</b>`;
+      document.getElementById("routeHint").innerHTML = `Suggested Route: <b>${route}</b><br/>Keyword Seed: <b>${selectedSeed || "n/a"}</b>`;
+      const routeAnchor = document.getElementById("routeAnchor");
+      routeAnchor.href = route;
+      routeAnchor.textContent = `Open ${pageType}`;
+
+      const seedWrap = document.getElementById("seedChips");
+      seedWrap.innerHTML = "";
+      const list = keywordSeeds[activeCategory] || [];
+      list.forEach((seed) => {
+        const chip = document.createElement("button");
+        chip.className = "chip";
+        chip.type = "button";
+        chip.textContent = seed;
+        chip.onclick = () => {
+          activeSeed = seed;
+          searchTerm = "";
+          document.getElementById("toolSearch").value = "";
+          update();
+        };
+        seedWrap.appendChild(chip);
+      });
+    }
+
+    function renderMainChart(rows) {
+      const title = `${categoryMeta[activeCategory].label} · ${modes[activeMode].label}`;
+      if (!rows.length) {
+        mainChart.setOption({
+          title: { text: "No matching tools", left: "center", top: "middle", textStyle: { color: "rgba(242,242,244,.7)" } }
+        }, true);
+        return;
+      }
+
+      if (activeChartType === "radar") {
+        mainChart.setOption({
+          backgroundColor: "transparent",
+          title: { text: title, left: "center", textStyle: { color: "rgba(242,242,244,.8)", fontSize: 13 } },
+          legend: { top: 28, textStyle: { color: "rgba(242,242,244,.7)" } },
+          tooltip: { trigger: "item" },
+          color: ["#9ad7ff", "#b3ffc8", "#ffd99f", "#ffc3c3", "#d2c6ff"],
+          radar: {
+            indicator: indicators.map(i => ({ name: i.name, max: i.max })),
+            axisName: { color: "rgba(242,242,244,.72)" },
+            splitLine: { lineStyle: { color: "rgba(255,255,255,.14)" } },
+            splitArea: { areaStyle: { color: ["rgba(255,255,255,.02)", "rgba(255,255,255,.01)"] } },
+            axisLine: { lineStyle: { color: "rgba(255,255,255,.18)" } }
+          },
+          series: [{
+            type: "radar",
+            data: rows.map(r => ({ name: r.tool, value: indicators.map(i => r[i.key]) })),
+            lineStyle: { width: 2 },
+            areaStyle: { opacity: 0.08 }
+          }]
+        }, true);
+        return;
+      }
+
+      if (activeChartType === "bar") {
+        mainChart.setOption({
+          backgroundColor: "transparent",
+          title: { text: title, left: "center", textStyle: { color: "rgba(242,242,244,.8)", fontSize: 13 } },
+          tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
+          grid: { left: 80, right: 16, top: 44, bottom: 24 },
+          xAxis: {
+            type: "value",
+            min: 0, max: 10,
+            axisLabel: { color: "rgba(242,242,244,.72)" },
+            splitLine: { lineStyle: { color: "rgba(255,255,255,.1)" } }
+          },
+          yAxis: {
+            type: "category",
+            data: rows.map(r => r.tool),
+            inverse: true,
+            axisLabel: { color: "rgba(242,242,244,.85)" }
+          },
+          series: [{
+            type: "bar",
+            data: rows.map(r => r.score),
+            itemStyle: {
+              color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [
+                { offset: 0, color: "rgba(147,208,255,0.95)" },
+                { offset: 1, color: "rgba(87,157,255,0.75)" }
+              ]),
+              borderRadius: [0, 8, 8, 0]
+            },
+            label: { show: true, position: "right", color: "rgba(242,242,244,.85)" }
+          }]
+        }, true);
+        return;
+      }
+
+      if (activeChartType === "bubble") {
+        mainChart.setOption({
+          backgroundColor: "transparent",
+          title: { text: `${title} · Quality vs Speed`, left: "center", textStyle: { color: "rgba(242,242,244,.8)", fontSize: 13 } },
+          tooltip: {
+            formatter: (p) => {
+              const item = rows[p.dataIndex];
+              return `${item.tool}<br/>Quality ${item.quality} · Speed ${item.speed}<br/>Score ${item.score}`;
+            }
+          },
+          grid: { left: 52, right: 24, top: 52, bottom: 34 },
+          xAxis: {
+            type: "value",
+            name: "Quality",
+            min: 0,
+            max: 10,
+            axisLabel: { color: "rgba(242,242,244,.72)" },
+            splitLine: { lineStyle: { color: "rgba(255,255,255,.09)" } }
+          },
+          yAxis: {
+            type: "value",
+            name: "Speed",
+            min: 0,
+            max: 10,
+            axisLabel: { color: "rgba(242,242,244,.72)" },
+            splitLine: { lineStyle: { color: "rgba(255,255,255,.09)" } }
+          },
+          series: [{
+            type: "scatter",
+            data: rows.map(r => [r.quality, r.speed, r.score]),
+            symbolSize: (v) => Math.max(14, v[2] * 3.2),
+            itemStyle: {
+              color: "rgba(145, 212, 255, 0.8)",
+              borderColor: "rgba(255,255,255,0.6)",
+              borderWidth: 1
+            },
+            label: {
+              show: true,
+              formatter: (p) => rows[p.dataIndex].tool,
+              color: "rgba(242,242,244,.82)",
+              fontSize: 11,
+              position: "top"
+            }
+          }]
+        }, true);
+        return;
+      }
+
+      if (activeChartType === "parallel") {
+        mainChart.setOption({
+          backgroundColor: "transparent",
+          title: { text: title, left: "center", textStyle: { color: "rgba(242,242,244,.8)", fontSize: 13 } },
+          tooltip: {
+            formatter: (p) => `${p.name}<br/>Score ${rows[p.dataIndex].score}`
+          },
+          parallelAxis: indicators.map((dim, index) => ({
+            dim: index,
+            name: dim.name,
+            min: 0,
+            max: 10,
+            nameTextStyle: { color: "rgba(242,242,244,.75)" },
+            axisLabel: { color: "rgba(242,242,244,.65)" }
+          })),
+          parallel: {
+            left: 40,
+            right: 40,
+            top: 54,
+            bottom: 24,
+            lineStyle: { width: 1.5 }
+          },
+          series: [{
+            type: "parallel",
+            data: rows.map(r => indicators.map(i => r[i.key])),
+            lineStyle: { width: 2, opacity: 0.7 }
+          }]
+        }, true);
+        return;
+      }
+
+      if (activeChartType === "rose") {
+        mainChart.setOption({
+          backgroundColor: "transparent",
+          title: { text: `${title} · Score Share`, left: "center", textStyle: { color: "rgba(242,242,244,.8)", fontSize: 13 } },
+          tooltip: {
+            trigger: "item",
+            formatter: (p) => `${p.name}<br/>Score ${p.value}`
+          },
+          legend: {
+            bottom: 6,
+            textStyle: { color: "rgba(242,242,244,.72)", fontSize: 11 }
+          },
+          series: [{
+            type: "pie",
+            radius: [38, 122],
+            center: ["50%", "50%"],
+            roseType: "area",
+            itemStyle: { borderRadius: 6, borderColor: "#0b0b0c", borderWidth: 2 },
+            label: { color: "rgba(242,242,244,.85)", fontSize: 11 },
+            data: rows.map(r => ({ name: r.tool, value: r.score }))
+          }]
+        }, true);
+        return;
+      }
+
+      // Fallback: if unknown type appears, render rank bar style.
+      mainChart.setOption({
+        backgroundColor: "transparent",
+        title: { text: title, left: "center", textStyle: { color: "rgba(242,242,244,.8)", fontSize: 13 } },
+        tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
+        grid: { left: 80, right: 16, top: 44, bottom: 24 },
+        xAxis: {
+          type: "value",
+          min: 0, max: 10,
+          axisLabel: { color: "rgba(242,242,244,.72)" },
+          splitLine: { lineStyle: { color: "rgba(255,255,255,.1)" } }
+        },
+        yAxis: {
+          type: "category",
+          data: rows.map(r => r.tool),
+          inverse: true,
+          axisLabel: { color: "rgba(242,242,244,.85)" }
+        },
+        series: [{
+          type: "bar",
+          data: rows.map(r => r.score),
+          itemStyle: { color: "rgba(160,210,255,.8)", borderRadius: [0, 6, 6, 0] }
+        }]
+      }, true);
+      return;
+    }
+
+    function renderRankChart(rows) {
+      if (!rows.length) {
+        rankChart.setOption({
+          title: { text: "No ranking data", left: "center", top: "middle", textStyle: { color: "rgba(242,242,244,.7)" } }
+        }, true);
+        return;
+      }
+      rankChart.setOption({
+        backgroundColor: "transparent",
+        title: { text: "Top Recommendation", left: "center", textStyle: { color: "rgba(242,242,244,.8)", fontSize: 13 } },
+        tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
+        grid: { left: 86, right: 16, top: 40, bottom: 24 },
+        xAxis: {
+          type: "value",
+          min: 0, max: 10,
+          axisLabel: { color: "rgba(242,242,244,.7)" },
+          splitLine: { lineStyle: { color: "rgba(255,255,255,.08)" } }
+        },
+        yAxis: {
+          type: "category",
+          data: rows.map(r => r.tool),
+          inverse: true,
+          axisLabel: { color: "rgba(242,242,244,.85)" }
+        },
+        series: [{
+          type: "bar",
+          data: rows.map(r => r.score),
+          itemStyle: {
+            color: (p) => p.dataIndex === 0 ? "rgba(171, 232, 180, .9)" : "rgba(150, 196, 255, .8)",
+            borderRadius: [0, 6, 6, 0]
+          },
+          label: { show: true, position: "right", color: "rgba(242,242,244,.85)" }
+        }]
+      }, true);
+    }
+
+    function renderRecommendations(rows) {
+      const wrap = document.getElementById("recoCards");
+      wrap.innerHTML = "";
+      if (!rows.length) {
+        wrap.innerHTML = `<article class="score-card"><h3>No Match</h3><p>Try another keyword or switch category.</p></article>`;
+        return;
+      }
+      rows.slice(0, 3).forEach((row, idx) => {
+        const card = document.createElement("article");
+        card.className = "score-card";
+        card.innerHTML = `
+          <h3>#${idx + 1} ${row.tool}</h3>
+          <p>${row.note}</p>
+          <a class="score-link" href="${row.url}" target="_blank" rel="noopener noreferrer nofollow">Open Tool</a>
+          <span class="score">Score ${row.score} / 10</span>
+        `;
+        wrap.appendChild(card);
+      });
+    }
+
+    function update() {
+      const rows = scoredData();
+      renderButtons();
+      renderInsights(rows);
+      renderMainChart(rows);
+      renderRankChart(rows);
+      renderRecommendations(rows);
+      rankChart.off("click");
+      rankChart.on("click", (params) => {
+        const clicked = rows[params.dataIndex];
+        if (clicked && clicked.url) {
+          window.open(clicked.url, "_blank", "noopener,noreferrer");
+        }
+      });
+    }
+
+    document.getElementById("toolSearch").addEventListener("input", (e) => {
+      searchTerm = e.target.value.trim().toLowerCase();
+      update();
+    });
+
+    update();
+    window.addEventListener("resize", () => {
+      mainChart.resize();
+      rankChart.resize();
+    });
   </script>
 </body>
 </html>
