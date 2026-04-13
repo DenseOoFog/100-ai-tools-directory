@@ -411,6 +411,12 @@
       ]
     };
 
+    const toolsHubRoutes = {
+      text2image: "hub-text-to-image.html",
+      bgremove: "hub-background-remover.html",
+      watermark: "hub-watermark-remover.html"
+    };
+
     const modes = {
       balanced: { label: "Balanced", weights: { quality: .24, speed: .18, freeValue: .18, automation: .12, ease: .14, batch: .14 } },
       freeFirst: { label: "Free-first", weights: { quality: .14, speed: .14, freeValue: .34, automation: .08, ease: .18, batch: .12 } },
@@ -531,7 +537,10 @@
       const topA = rows[0]?.tool || "";
       const topB = rows[1]?.tool || "";
       let route = `vertical-template.html?intent=${encodeURIComponent(activeIntent)}&category=${encodeURIComponent(activeCategory)}&slug=${encodeURIComponent(slug)}`;
-      if (selectedSeed) route = `${route}&kw=${encodeURIComponent(selectedSeed)}`;
+      if (activeIntent === "tools" && toolsHubRoutes[activeCategory]) {
+        route = toolsHubRoutes[activeCategory];
+      }
+      if (selectedSeed) route = `${route}${route.includes("?") ? "&" : "?"}kw=${encodeURIComponent(selectedSeed)}`;
       if (activeIntent === "compare" && topA && topB) {
         route = `${route}&a=${encodeURIComponent(topA)}&b=${encodeURIComponent(topB)}`;
       }
