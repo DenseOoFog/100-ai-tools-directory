@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vertical Comparison Lab - AI Tool Lab</title>
+  <meta name="description" content="Compare tools in focused verticals with switchable charts and weighted scoring profiles." />
+  <meta name="robots" content="index,follow" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2WKE3N7YEH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2WKE3N7YEH');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9156049827002127" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <style>
+    :root { --bg:#0b0b0c; --line:rgba(255,255,255,.14); --text:#f2f2f4; --muted:rgba(242,242,244,.66); }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif; color:var(--text); background:var(--bg); }
+    .wrap { width:100%; max-width:none; margin:0; padding:28px clamp(14px,3vw,34px) 44px; display:grid; gap:14px; }
+    h1 { margin:0; font-size:clamp(30px,4vw,50px); letter-spacing:-.03em; }
+    .sub { margin:10px 0 0; color:var(--muted); font-size:13px; line-height:1.55; }
+    .panel { border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,.02); padding:12px; }
+    .toolbar { display:flex; flex-wrap:wrap; gap:9px; }
+    .label { font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin-bottom:8px; }
+    .btn { border:1px solid var(--line); background:#101013; color:var(--muted); border-radius:999px; padding:6px 11px; font-size:12px; cursor:pointer; }
+    .btn.active { background:#f2f2f4; color:#0a0a0b; border-color:#f2f2f4; font-weight:700; }
+    .search-input { width:100%; border:1px solid var(--line); border-radius:10px; background:#0f1012; color:var(--text); font-size:13px; padding:9px 10px; outline:none; }
+    .search-input:focus { border-color:rgba(255,255,255,.35); }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .chart { border:1px solid var(--line); border-radius:10px; min-height:390px; background:rgba(255,255,255,.02); }
+    .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,.03); padding:12px; }
+    .card h3 { margin:0 0 8px; font-size:14px; }
+    .card p { margin:0; color:var(--muted); font-size:12px; line-height:1.45; }
+    .score { display:inline-block; margin-top:10px; border:1px solid var(--line); border-radius:999px; padding:2px 7px; font-size:11px; color:#dbf2ff; background:rgba(135,196,255,.15); }
+    .link { margin-top:8px; display:inline-block; font-size:11px; color:#cfe7ff; text-decoration:none; border:1px solid var(--line); border-radius:999px; padding:3px 8px; background:rgba(135,196,255,.12); }
+    .link:hover { color:#fff; border-color:rgba(255,255,255,.4); }
+    .footer { margin-top:8px; border-top:1px solid var(--line); padding-top:10px; display:flex; flex-wrap:wrap; gap:8px; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr; } .cards { grid-template-columns:1fr 1fr; } }
+    @media (max-width:620px) { .cards { grid-template-columns:1fr; } .wrap { padding:20px 12px 34px; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section>
+      <a class="link" href="./index.html">Back to Lab</a>
+      <h1 id="title">Vertical Comparison Lab</h1>
+      <p id="sub" class="sub"></p>
+    </section>
+
+    <section class="panel">
+      <div class="label">Vertical Category</div>
+      <div id="categoryBtns" class="toolbar"></div>
+      <div class="label" style="margin-top:10px;">Tool Search</div>
+      <input id="searchInput" class="search-input" placeholder="Search tool name..." />
+      <div class="label" style="margin-top:10px;">Chart Type</div>
+      <div id="chartTypeBtns" class="toolbar"></div>
+      <div class="label" style="margin-top:10px;">Parameter Profile</div>
+      <div id="modeBtns" class="toolbar"></div>
+    </section>
+
+    <section class="grid">
+      <div id="mainChart" class="chart"></div>
+      <div id="rankChart" class="chart"></div>
+    </section>
+
+    <section id="cards" class="cards"></section>
+
+    <footer class="footer">
+      <a class="link" href="./about.html">About</a>
+      <a class="link" href="./contact.html">Contact</a>
+      <a class="link" href="./privacy-policy.html">Privacy</a>
+      <a class="link" href="./disclaimer.html">Disclaimer</a>
+      <a class="link" href="./terms.html">Terms</a>
+    </footer>
+  </main>
+
+  <script>
+    const categoryMeta = {
+      bgremove: { label: "Background Remover", sub: "First batch core vertical. Product cutout and visual cleanup decisions." },
+      text2video: { label: "Text-to-Video", sub: "First batch core vertical. Fast creator-oriented video generation workflow." },
+      keywordresearch: { label: "AI Keyword Research", sub: "First batch core vertical. SEO demand discovery and content planning." }
+    };
+
+    const datasets = {
+      bgremove: [
+        { tool: "remove.bg", url: "https://www.remove.bg/", quality: 9.1, speed: 9.3, freeValue: 7.4, automation: 8.8, ease: 9.4, batch: 7.8, reliability: 9.2, note: "Most reliable for product and portrait cutouts." },
+        { tool: "Cleanup.pictures", url: "https://cleanup.pictures/", quality: 8.2, speed: 8.1, freeValue: 8.1, automation: 4.0, ease: 8.6, batch: 5.6, reliability: 8.4, note: "Strong for cleanup and retouching." },
+        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 7.8, speed: 8.4, freeValue: 7.0, automation: 3.8, ease: 8.9, batch: 6.3, reliability: 8.0, note: "Fast creator workflow for social assets." },
+        { tool: "Photopea", url: "https://www.photopea.com/", quality: 7.2, speed: 6.3, freeValue: 9.2, automation: 2.1, ease: 6.4, batch: 4.2, reliability: 7.8, note: "Great free value with manual control." }
+      ],
+      text2video: [
+        { tool: "Runway", url: "https://runwayml.com/", quality: 8.7, speed: 7.9, freeValue: 6.1, automation: 7.2, ease: 7.9, batch: 6.2, reliability: 8.4, note: "High quality output and advanced workflow depth." },
+        { tool: "Pika", url: "https://pika.art/", quality: 8.3, speed: 8.5, freeValue: 6.8, automation: 5.2, ease: 8.3, batch: 5.1, reliability: 7.9, note: "Fast iteration for short-form creation." },
+        { tool: "Luma Dream Machine", url: "https://lumalabs.ai/dream-machine", quality: 8.5, speed: 8.1, freeValue: 6.4, automation: 5.6, ease: 8.0, batch: 5.0, reliability: 7.8, note: "Strong realism and motion quality." },
+        { tool: "InVideo AI", url: "https://invideo.io/ai/", quality: 7.6, speed: 8.4, freeValue: 7.2, automation: 6.8, ease: 8.9, batch: 6.0, reliability: 8.1, note: "Template-driven speed and accessibility." },
+        { tool: "Kapwing AI", url: "https://www.kapwing.com/ai", quality: 7.2, speed: 8.2, freeValue: 7.6, automation: 5.9, ease: 9.1, batch: 5.4, reliability: 7.7, note: "Easy editing and subtitle support." }
+      ],
+      keywordresearch: [
+        { tool: "Ahrefs", url: "https://ahrefs.com/keywords-explorer", quality: 9.2, speed: 8.3, freeValue: 3.9, automation: 7.8, ease: 7.5, batch: 8.1, reliability: 9.3, note: "Deep keyword index and SERP analytics." },
+        { tool: "Semrush", url: "https://www.semrush.com/", quality: 9.0, speed: 8.1, freeValue: 4.2, automation: 7.4, ease: 7.6, batch: 7.8, reliability: 9.1, note: "Comprehensive SEO suite for teams." },
+        { tool: "SE Ranking", url: "https://seranking.com/", quality: 8.1, speed: 8.2, freeValue: 6.9, automation: 6.2, ease: 8.1, batch: 6.5, reliability: 8.5, note: "Balanced data depth and usability." },
+        { tool: "KeywordTool.io", url: "https://keywordtool.io/", quality: 7.8, speed: 8.8, freeValue: 6.3, automation: 5.4, ease: 8.7, batch: 6.0, reliability: 8.2, note: "Fast long-tail discovery." },
+        { tool: "Ubersuggest", url: "https://neilpatel.com/ubersuggest/", quality: 7.4, speed: 8.6, freeValue: 7.8, automation: 4.8, ease: 8.9, batch: 5.6, reliability: 7.9, note: "Good free-start option for beginners." }
+      ]
+    };
+
+    const chartTypes = [
+      { key: "bubble", label: "Bubble" },
+      { key: "bar", label: "Rank Bar" },
+      { key: "radar", label: "Radar" },
+      { key: "parallel", label: "Parallel" }
+    ];
+
+    const modes = {
+      balanced: { label: "Balanced", weights: { quality: .22, speed: .16, freeValue: .16, automation: .11, ease: .13, batch: .12, reliability: .10 } },
+      freeFirst: { label: "Free-first", weights: { quality: .12, speed: .12, freeValue: .30, automation: .08, ease: .15, batch: .10, reliability: .13 } },
+      qualityFirst: { label: "Quality-first", weights: { quality: .32, speed: .14, freeValue: .08, automation: .09, ease: .12, batch: .13, reliability: .12 } },
+      automationFirst: { label: "Automation-first", weights: { quality: .13, speed: .11, freeValue: .06, automation: .27, ease: .10, batch: .20, reliability: .13 } }
+    };
+
+    const indicators = [
+      { name: "Quality", key: "quality", max: 10 },
+      { name: "Speed", key: "speed", max: 10 },
+      { name: "Free Value", key: "freeValue", max: 10 },
+      { name: "Automation", key: "automation", max: 10 },
+      { name: "Ease", key: "ease", max: 10 },
+      { name: "Batch", key: "batch", max: 10 },
+      { name: "Reliability", key: "reliability", max: 10 }
+    ];
+
+    const params = new URLSearchParams(window.location.search);
+    let activeCategory = params.get("category");
+    if (!datasets[activeCategory]) activeCategory = "bgremove";
+    let activeChartType = "bubble";
+    let activeMode = "balanced";
+    let searchTerm = "";
+
+    const mainChart = echarts.init(document.getElementById("mainChart"));
+    const rankChart = echarts.init(document.getElementById("rankChart"));
+
+    function scoreItem(item, weights) {
+      return indicators.reduce((sum, dim) => sum + item[dim.key] * weights[dim.key], 0);
+    }
+
+    function scoredData() {
+      const weights = modes[activeMode].weights;
+      return datasets[activeCategory]
+        .filter(item => !searchTerm || item.tool.toLowerCase().includes(searchTerm))
+        .map(item => ({ ...item, score: Number(scoreItem(item, weights).toFixed(2)) }))
+        .sort((a, b) => b.score - a.score);
+    }
+
+    function renderButtons() {
+      document.getElementById("title").textContent = categoryMeta[activeCategory].label;
+      document.getElementById("sub").textContent = categoryMeta[activeCategory].sub;
+
+      const catWrap = document.getElementById("categoryBtns");
+      catWrap.innerHTML = "";
+      Object.entries(categoryMeta).forEach(([key, meta]) => {
+        const btn = document.createElement("button");
+        btn.className = "btn" + (activeCategory === key ? " active" : "");
+        btn.textContent = meta.label;
+        btn.onclick = () => { activeCategory = key; update(); };
+        catWrap.appendChild(btn);
+      });
+
+      const typeWrap = document.getElementById("chartTypeBtns");
+      typeWrap.innerHTML = "";
+      chartTypes.forEach(type => {
+        const btn = document.createElement("button");
+        btn.className = "btn" + (activeChartType === type.key ? " active" : "");
+        btn.textContent = type.label;
+        btn.onclick = () => { activeChartType = type.key; update(); };
+        typeWrap.appendChild(btn);
+      });
+
+      const modeWrap = document.getElementById("modeBtns");
+      modeWrap.innerHTML = "";
+      Object.entries(modes).forEach(([key, mode]) => {
+        const btn = document.createElement("button");
+        btn.className = "btn" + (activeMode === key ? " active" : "");
+        btn.textContent = mode.label;
+        btn.onclick = () => { activeMode = key; update(); };
+        modeWrap.appendChild(btn);
+      });
+    }
+
+    function renderMainChart(rows) {
+      const title = `${categoryMeta[activeCategory].label} · ${modes[activeMode].label}`;
+      if (!rows.length) {
+        mainChart.setOption({ title: { text: "No matching tools", left: "center", top: "middle", textStyle: { color: "rgba(242,242,244,.7)" } } }, true);
+        return;
+      }
+      if (activeChartType === "radar") {
+        mainChart.setOption({
+          title: { text: title, left: "center", textStyle: { color: "rgba(242,242,244,.8)", fontSize: 13 } },
+          legend: { top: 28, textStyle: { color: "rgba(242,242,244,.7)" } },
+          radar: { indicator: indicators.map(i => ({ name: i.name, max: i.max })), axisName: { color: "rgba(242,242,244,.72)" } },
+          series: [{ type: "radar", data: rows.map(r => ({ name: r.tool, value: indicators.map(i => r[i.key]) })) }]
+        }, true);
+        return;
+      }
+      if (activeChartType === "bar") {
+        mainChart.setOption({
+          title: { text: title, left: "center", textStyle: { color: "rgba(242,242,244,.8)", fontSize: 13 } },
+          grid: { left: 86, right: 16, top: 44, bottom: 24 },
+          xAxis: { type: "value", min: 0, max: 10, axisLabel: { color: "rgba(242,242,244,.72)" } },
+          yAxis: { type: "category", data: rows.map(r => r.tool), inverse: true, axisLabel: { color: "rgba(242,242,244,.85)" } },
+          series: [{ type: "bar", data: rows.map(r => r.score), label: { show: true, position: "right", color: "rgba(242,242,244,.85)" } }]
+        }, true);
+        return;
+      }
+      if (activeChartType === "parallel") {
+        mainChart.setOption({
+          title: { text: title, left: "center", textStyle: { color: "rgba(242,242,244,.8)", fontSize: 13 } },
+          parallelAxis: indicators.map((d, i) => ({ dim: i, name: d.name, min: 0, max: 10, nameTextStyle: { color: "rgba(242,242,244,.75)" } })),
+          parallel: { left: 40, right: 40, top: 54, bottom: 24 },
+          series: [{ type: "parallel", data: rows.map(r => indicators.map(i => r[i.key])) }]
+        }, true);
+        return;
+      }
+      mainChart.setOption({
+        title: { text: `${title} · Quality vs Speed`, left: "center", textStyle: { color: "rgba(242,242,244,.8)", fontSize: 13 } },
+        grid: { left: 52, right: 24, top: 52, bottom: 34 },
+        xAxis: { type: "value", name: "Quality", min: 0, max: 10, axisLabel: { color: "rgba(242,242,244,.72)" } },
+        yAxis: { type: "value", name: "Speed", min: 0, max: 10, axisLabel: { color: "rgba(242,242,244,.72)" } },
+        series: [{
+          type: "scatter",
+          data: rows.map(r => [r.quality, r.speed, r.score]),
+          symbolSize: (v) => Math.max(14, v[2] * 3.2),
+          label: { show: true, formatter: (p) => rows[p.dataIndex].tool, color: "rgba(242,242,244,.82)", fontSize: 11, position: "top" }
+        }]
+      }, true);
+    }
+
+    function renderRankChart(rows) {
+      if (!rows.length) {
+        rankChart.setOption({ title: { text: "No ranking data", left: "center", top: "middle", textStyle: { color: "rgba(242,242,244,.7)" } } }, true);
+        return;
+      }
+      rankChart.setOption({
+        title: { text: "Top Recommendation", left: "center", textStyle: { color: "rgba(242,242,244,.8)", fontSize: 13 } },
+        grid: { left: 86, right: 16, top: 40, bottom: 24 },
+        xAxis: { type: "value", min: 0, max: 10, axisLabel: { color: "rgba(242,242,244,.7)" } },
+        yAxis: { type: "category", data: rows.map(r => r.tool), inverse: true, axisLabel: { color: "rgba(242,242,244,.85)" } },
+        series: [{ type: "bar", data: rows.map(r => r.score), label: { show: true, position: "right", color: "rgba(242,242,244,.85)" } }]
+      }, true);
+    }
+
+    function renderCards(rows) {
+      const wrap = document.getElementById("cards");
+      wrap.innerHTML = "";
+      if (!rows.length) {
+        wrap.innerHTML = `<article class="card"><h3>No Match</h3><p>Try another keyword or switch category.</p></article>`;
+        return;
+      }
+      rows.slice(0, 3).forEach((row, idx) => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <h3>#${idx + 1} ${row.tool}</h3>
+          <p>${row.note}</p>
+          <a class="link" href="${row.url}" target="_blank" rel="noopener noreferrer nofollow">Open Tool</a>
+          <span class="score">Score ${row.score} / 10</span>
+        `;
+        wrap.appendChild(card);
+      });
+    }
+
+    function update() {
+      const rows = scoredData();
+      renderButtons();
+      renderMainChart(rows);
+      renderRankChart(rows);
+      renderCards(rows);
+    }
+
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+      searchTerm = e.target.value.trim().toLowerCase();
+      update();
+    });
+
+    update();
+    window.addEventListener("resize", () => { mainChart.resize(); rankChart.resize(); });
+  </script>
+</body>
+</html>

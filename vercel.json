@@ -16,6 +16,9 @@
     { "source": "/contact", "destination": "/contact.html", "permanent": true },
     { "source": "/privacy-policy", "destination": "/privacy-policy.html", "permanent": true },
     { "source": "/disclaimer", "destination": "/disclaimer.html", "permanent": true },
-    { "source": "/terms", "destination": "/terms.html", "permanent": true }
+    { "source": "/terms", "destination": "/terms.html", "permanent": true },
+    { "source": "/background-remover", "destination": "/vertical-lab.html?category=bgremove", "permanent": true },
+    { "source": "/text-to-video", "destination": "/vertical-lab.html?category=text2video", "permanent": true },
+    { "source": "/keyword-research", "destination": "/vertical-lab.html?category=keywordresearch", "permanent": true }
   ]
 }
