@@ -155,6 +155,7 @@
             <option value="speed">Sort: Speed</option>
             <option value="freeValue">Sort: Free Value</option>
             <option value="automation">Sort: Automation</option>
+            <option value="reliability">Sort: Reliability</option>
           </select>
         </label>
         <label>
@@ -185,6 +186,7 @@
             <th>Speed</th>
             <th>Free</th>
             <th>Automation</th>
+            <th>Reliability</th>
           </tr>
         </thead>
         <tbody id="tableBody"></tbody>
@@ -211,22 +213,22 @@
   <script>
     const datasets = {
       text2image: [
-        { tool: "Midjourney", url: "https://www.midjourney.com/", quality: 9.4, speed: 7.6, freeValue: 2.0, automation: 4.8, ease: 7.3, batch: 7.2, note: "Best visual quality and style consistency." },
-        { tool: "Leonardo", url: "https://leonardo.ai/", quality: 8.4, speed: 8.1, freeValue: 7.8, automation: 6.0, ease: 8.2, batch: 7.1, note: "Strong free tier and creator workflow." },
-        { tool: "DALL-E", url: "https://openai.com/dall-e/", quality: 8.2, speed: 8.9, freeValue: 6.2, automation: 7.1, ease: 8.7, batch: 6.3, note: "Fast generation and good prompt following." },
-        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 7.4, speed: 8.8, freeValue: 7.1, automation: 3.9, ease: 9.4, batch: 5.1, note: "Easiest for quick social media assets." }
+        { tool: "Midjourney", url: "https://www.midjourney.com/", quality: 9.4, speed: 7.6, freeValue: 2.0, automation: 4.8, ease: 7.3, batch: 7.2, reliability: 8.8, note: "Best visual quality and style consistency." },
+        { tool: "Leonardo", url: "https://leonardo.ai/", quality: 8.4, speed: 8.1, freeValue: 7.8, automation: 6.0, ease: 8.2, batch: 7.1, reliability: 8.2, note: "Strong free tier and creator workflow." },
+        { tool: "DALL-E", url: "https://openai.com/dall-e/", quality: 8.2, speed: 8.9, freeValue: 6.2, automation: 7.1, ease: 8.7, batch: 6.3, reliability: 8.5, note: "Fast generation and good prompt following." },
+        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 7.4, speed: 8.8, freeValue: 7.1, automation: 3.9, ease: 9.4, batch: 5.1, reliability: 8.1, note: "Easiest for quick social media assets." }
       ],
       bgremove: [
-        { tool: "remove.bg", url: "https://www.remove.bg/", quality: 9.1, speed: 9.3, freeValue: 7.4, automation: 8.8, ease: 9.4, batch: 7.8, note: "Most reliable for product and portrait cutouts." },
-        { tool: "Cleanup.pictures", url: "https://cleanup.pictures/", quality: 8.2, speed: 8.1, freeValue: 8.1, automation: 4.0, ease: 8.6, batch: 5.6, note: "Great for object cleanup and retouching." },
-        { tool: "Photopea", url: "https://www.photopea.com/", quality: 7.2, speed: 6.3, freeValue: 9.2, automation: 2.1, ease: 6.4, batch: 4.2, note: "Free-heavy but more manual operations." },
-        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 7.8, speed: 8.4, freeValue: 7.0, automation: 3.8, ease: 8.9, batch: 6.3, note: "Fast and easy for creator workflows." }
+        { tool: "remove.bg", url: "https://www.remove.bg/", quality: 9.1, speed: 9.3, freeValue: 7.4, automation: 8.8, ease: 9.4, batch: 7.8, reliability: 9.2, note: "Most reliable for product and portrait cutouts." },
+        { tool: "Cleanup.pictures", url: "https://cleanup.pictures/", quality: 8.2, speed: 8.1, freeValue: 8.1, automation: 4.0, ease: 8.6, batch: 5.6, reliability: 8.4, note: "Great for object cleanup and retouching." },
+        { tool: "Photopea", url: "https://www.photopea.com/", quality: 7.2, speed: 6.3, freeValue: 9.2, automation: 2.1, ease: 6.4, batch: 4.2, reliability: 7.8, note: "Free-heavy but more manual operations." },
+        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 7.8, speed: 8.4, freeValue: 7.0, automation: 3.8, ease: 8.9, batch: 6.3, reliability: 8.0, note: "Fast and easy for creator workflows." }
       ],
       watermark: [
-        { tool: "Cleanup.pictures", url: "https://cleanup.pictures/", quality: 8.0, speed: 8.2, freeValue: 8.2, automation: 3.9, ease: 8.7, batch: 5.3, note: "Solid visual cleanup quality for many cases." },
-        { tool: "Photopea", url: "https://www.photopea.com/", quality: 7.9, speed: 6.1, freeValue: 9.0, automation: 2.0, ease: 6.0, batch: 4.0, note: "Manual but controllable for harder edits." },
-        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 6.8, speed: 8.7, freeValue: 7.1, automation: 3.4, ease: 9.1, batch: 5.0, note: "Easy starter option for light edits." },
-        { tool: "Inpaint", url: "https://theinpaint.com/", quality: 7.3, speed: 7.8, freeValue: 5.6, automation: 1.8, ease: 7.5, batch: 3.5, note: "Focused simple inpainting experience." }
+        { tool: "Cleanup.pictures", url: "https://cleanup.pictures/", quality: 8.0, speed: 8.2, freeValue: 8.2, automation: 3.9, ease: 8.7, batch: 5.3, reliability: 8.3, note: "Solid visual cleanup quality for many cases." },
+        { tool: "Photopea", url: "https://www.photopea.com/", quality: 7.9, speed: 6.1, freeValue: 9.0, automation: 2.0, ease: 6.0, batch: 4.0, reliability: 7.7, note: "Manual but controllable for harder edits." },
+        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 6.8, speed: 8.7, freeValue: 7.1, automation: 3.4, ease: 9.1, batch: 5.0, reliability: 7.5, note: "Easy starter option for light edits." },
+        { tool: "Inpaint", url: "https://theinpaint.com/", quality: 7.3, speed: 7.8, freeValue: 5.6, automation: 1.8, ease: 7.5, batch: 3.5, reliability: 7.4, note: "Focused simple inpainting experience." }
       ]
     };
 
@@ -241,31 +243,31 @@
         label: "Tools",
         pageType: "Vertical Category Hub",
         intro: "A compact overview for this vertical category with objective score sorting and quick outbound decisions.",
-        weights: { quality: .24, speed: .18, freeValue: .18, automation: .12, ease: .14, batch: .14 }
+        weights: { quality: .22, speed: .16, freeValue: .16, automation: .11, ease: .13, batch: .12, reliability: .10 }
       },
       compare: {
         label: "Compare",
         pageType: "Comparison Page",
         intro: "Head-to-head style ranking emphasizing measurable differences across key dimensions.",
-        weights: { quality: .34, speed: .20, freeValue: .10, automation: .13, ease: .10, batch: .13 }
+        weights: { quality: .30, speed: .18, freeValue: .10, automation: .12, ease: .09, batch: .10, reliability: .11 }
       },
       usecase: {
         label: "Use-case",
         pageType: "Use-case Landing Page",
         intro: "Scenario-first ranking for creator and business use cases with practical recommendations.",
-        weights: { quality: .20, speed: .22, freeValue: .14, automation: .10, ease: .24, batch: .10 }
+        weights: { quality: .18, speed: .20, freeValue: .13, automation: .09, ease: .22, batch: .08, reliability: .10 }
       },
       free: {
         label: "Free-first",
         pageType: "Free-first Collection Page",
         intro: "Budget-aware ranking with stronger free-value weighting and practical free-start guidance.",
-        weights: { quality: .14, speed: .14, freeValue: .34, automation: .08, ease: .18, batch: .12 }
+        weights: { quality: .12, speed: .12, freeValue: .30, automation: .08, ease: .15, batch: .10, reliability: .13 }
       },
       automation: {
         label: "Automation",
         pageType: "Automation-focused Page",
         intro: "Workflow-oriented view prioritizing automation and batch operation dimensions.",
-        weights: { quality: .15, speed: .13, freeValue: .07, automation: .30, ease: .12, batch: .23 }
+        weights: { quality: .13, speed: .11, freeValue: .06, automation: .27, ease: .10, batch: .20, reliability: .13 }
       }
     };
 
@@ -274,7 +276,7 @@
     const category = params.get("category") || "bgremove";
     const kw = params.get("kw") || "";
     const config = intentConfig[intent] || intentConfig.tools;
-    const dims = ["quality", "speed", "freeValue", "automation", "ease", "batch"];
+    const dims = ["quality", "speed", "freeValue", "automation", "ease", "batch", "reliability"];
 
     function buildRows() {
       return (datasets[category] || datasets.bgremove).map((item) => {
@@ -331,6 +333,7 @@
           <td>${row.speed}</td>
           <td>${row.freeValue}</td>
           <td>${row.automation}</td>
+          <td>${row.reliability}</td>
         `;
         tbody.appendChild(tr);
       });

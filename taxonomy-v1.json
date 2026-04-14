@@ -159,6 +159,7 @@
     "freeValue",
     "automation",
     "ease",
-    "batch"
+    "batch",
+    "reliability"
   ]
 }

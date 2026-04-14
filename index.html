@@ -352,22 +352,22 @@
 
     const datasets = {
       text2image: [
-        { tool: "Midjourney", url: "https://www.midjourney.com/", quality: 9.4, speed: 7.6, freeValue: 2.0, automation: 4.8, ease: 7.3, batch: 7.2, note: "Best visual quality and style consistency." },
-        { tool: "Leonardo", url: "https://leonardo.ai/", quality: 8.4, speed: 8.1, freeValue: 7.8, automation: 6.0, ease: 8.2, batch: 7.1, note: "Strong free tier and creator workflow." },
-        { tool: "DALL-E", url: "https://openai.com/dall-e/", quality: 8.2, speed: 8.9, freeValue: 6.2, automation: 7.1, ease: 8.7, batch: 6.3, note: "Fast generation and good prompt following." },
-        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 7.4, speed: 8.8, freeValue: 7.1, automation: 3.9, ease: 9.4, batch: 5.1, note: "Easiest for quick social media assets." }
+        { tool: "Midjourney", url: "https://www.midjourney.com/", quality: 9.4, speed: 7.6, freeValue: 2.0, automation: 4.8, ease: 7.3, batch: 7.2, reliability: 8.8, note: "Best visual quality and style consistency." },
+        { tool: "Leonardo", url: "https://leonardo.ai/", quality: 8.4, speed: 8.1, freeValue: 7.8, automation: 6.0, ease: 8.2, batch: 7.1, reliability: 8.2, note: "Strong free tier and creator workflow." },
+        { tool: "DALL-E", url: "https://openai.com/dall-e/", quality: 8.2, speed: 8.9, freeValue: 6.2, automation: 7.1, ease: 8.7, batch: 6.3, reliability: 8.5, note: "Fast generation and good prompt following." },
+        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 7.4, speed: 8.8, freeValue: 7.1, automation: 3.9, ease: 9.4, batch: 5.1, reliability: 8.1, note: "Easiest for quick social media assets." }
       ],
       bgremove: [
-        { tool: "remove.bg", url: "https://www.remove.bg/", quality: 9.1, speed: 9.3, freeValue: 7.4, automation: 8.8, ease: 9.4, batch: 7.8, note: "Most reliable for product and portrait cutouts." },
-        { tool: "Cleanup.pictures", url: "https://cleanup.pictures/", quality: 8.2, speed: 8.1, freeValue: 8.1, automation: 4.0, ease: 8.6, batch: 5.6, note: "Great for object cleanup and retouching." },
-        { tool: "Photopea", url: "https://www.photopea.com/", quality: 7.2, speed: 6.3, freeValue: 9.2, automation: 2.1, ease: 6.4, batch: 4.2, note: "Free-heavy but more manual operations." },
-        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 7.8, speed: 8.4, freeValue: 7.0, automation: 3.8, ease: 8.9, batch: 6.3, note: "Fast and easy for creator workflows." }
+        { tool: "remove.bg", url: "https://www.remove.bg/", quality: 9.1, speed: 9.3, freeValue: 7.4, automation: 8.8, ease: 9.4, batch: 7.8, reliability: 9.2, note: "Most reliable for product and portrait cutouts." },
+        { tool: "Cleanup.pictures", url: "https://cleanup.pictures/", quality: 8.2, speed: 8.1, freeValue: 8.1, automation: 4.0, ease: 8.6, batch: 5.6, reliability: 8.4, note: "Great for object cleanup and retouching." },
+        { tool: "Photopea", url: "https://www.photopea.com/", quality: 7.2, speed: 6.3, freeValue: 9.2, automation: 2.1, ease: 6.4, batch: 4.2, reliability: 7.8, note: "Free-heavy but more manual operations." },
+        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 7.8, speed: 8.4, freeValue: 7.0, automation: 3.8, ease: 8.9, batch: 6.3, reliability: 8.0, note: "Fast and easy for creator workflows." }
       ],
       watermark: [
-        { tool: "Cleanup.pictures", url: "https://cleanup.pictures/", quality: 8.0, speed: 8.2, freeValue: 8.2, automation: 3.9, ease: 8.7, batch: 5.3, note: "Solid visual cleanup quality for many cases." },
-        { tool: "Photopea", url: "https://www.photopea.com/", quality: 7.9, speed: 6.1, freeValue: 9.0, automation: 2.0, ease: 6.0, batch: 4.0, note: "Manual but controllable for harder edits." },
-        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 6.8, speed: 8.7, freeValue: 7.1, automation: 3.4, ease: 9.1, batch: 5.0, note: "Easy starter option for light edits." },
-        { tool: "Inpaint", url: "https://theinpaint.com/", quality: 7.3, speed: 7.8, freeValue: 5.6, automation: 1.8, ease: 7.5, batch: 3.5, note: "Focused simple inpainting experience." }
+        { tool: "Cleanup.pictures", url: "https://cleanup.pictures/", quality: 8.0, speed: 8.2, freeValue: 8.2, automation: 3.9, ease: 8.7, batch: 5.3, reliability: 8.3, note: "Solid visual cleanup quality for many cases." },
+        { tool: "Photopea", url: "https://www.photopea.com/", quality: 7.9, speed: 6.1, freeValue: 9.0, automation: 2.0, ease: 6.0, batch: 4.0, reliability: 7.7, note: "Manual but controllable for harder edits." },
+        { tool: "Canva AI", url: "https://www.canva.com/ai-image-generator/", quality: 6.8, speed: 8.7, freeValue: 7.1, automation: 3.4, ease: 9.1, batch: 5.0, reliability: 7.5, note: "Easy starter option for light edits." },
+        { tool: "Inpaint", url: "https://theinpaint.com/", quality: 7.3, speed: 7.8, freeValue: 5.6, automation: 1.8, ease: 7.5, batch: 3.5, reliability: 7.4, note: "Focused simple inpainting experience." }
       ]
     };
 
@@ -418,13 +418,13 @@
     };
 
     const modes = {
-      balanced: { label: "Balanced", weights: { quality: .24, speed: .18, freeValue: .18, automation: .12, ease: .14, batch: .14 } },
-      freeFirst: { label: "Free-first", weights: { quality: .14, speed: .14, freeValue: .34, automation: .08, ease: .18, batch: .12 } },
-      qualityFirst: { label: "Quality-first", weights: { quality: .38, speed: .15, freeValue: .08, automation: .10, ease: .14, batch: .15 } },
-      automationFirst: { label: "Automation-first", weights: { quality: .15, speed: .13, freeValue: .07, automation: .30, ease: .12, batch: .23 } },
-      speedFirst: { label: "Speed-first", weights: { quality: .17, speed: .34, freeValue: .12, automation: .10, ease: .15, batch: .12 } },
-      easeFirst: { label: "Ease-first", weights: { quality: .16, speed: .16, freeValue: .14, automation: .08, ease: .32, batch: .14 } },
-      batchFirst: { label: "Batch-first", weights: { quality: .18, speed: .15, freeValue: .08, automation: .16, ease: .10, batch: .33 } }
+      balanced: { label: "Balanced", weights: { quality: .22, speed: .16, freeValue: .16, automation: .11, ease: .13, batch: .12, reliability: .10 } },
+      freeFirst: { label: "Free-first", weights: { quality: .12, speed: .12, freeValue: .30, automation: .08, ease: .15, batch: .10, reliability: .13 } },
+      qualityFirst: { label: "Quality-first", weights: { quality: .32, speed: .14, freeValue: .08, automation: .09, ease: .12, batch: .13, reliability: .12 } },
+      automationFirst: { label: "Automation-first", weights: { quality: .13, speed: .11, freeValue: .06, automation: .27, ease: .10, batch: .20, reliability: .13 } },
+      speedFirst: { label: "Speed-first", weights: { quality: .15, speed: .30, freeValue: .10, automation: .09, ease: .13, batch: .10, reliability: .13 } },
+      easeFirst: { label: "Ease-first", weights: { quality: .14, speed: .14, freeValue: .12, automation: .07, ease: .28, batch: .11, reliability: .14 } },
+      batchFirst: { label: "Batch-first", weights: { quality: .16, speed: .13, freeValue: .08, automation: .14, ease: .09, batch: .28, reliability: .12 } }
     };
 
     const indicators = [
@@ -433,7 +433,8 @@
       { name: "Free Value", key: "freeValue", max: 10 },
       { name: "Automation", key: "automation", max: 10 },
       { name: "Ease", key: "ease", max: 10 },
-      { name: "Batch", key: "batch", max: 10 }
+      { name: "Batch", key: "batch", max: 10 },
+      { name: "Reliability", key: "reliability", max: 10 }
     ];
 
     let activeLevel1 = "enhancement";

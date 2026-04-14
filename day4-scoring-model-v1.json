@@ -1,0 +1,81 @@
+{
+  "version": "v1",
+  "updated_at": "2026-04-11",
+  "dimensions": [
+    "quality",
+    "speed",
+    "freeValue",
+    "automation",
+    "ease",
+    "batch",
+    "reliability"
+  ],
+  "weight_presets": {
+    "balanced": {
+      "quality": 0.22,
+      "speed": 0.16,
+      "freeValue": 0.16,
+      "automation": 0.11,
+      "ease": 0.13,
+      "batch": 0.12,
+      "reliability": 0.10
+    },
+    "free-first": {
+      "quality": 0.12,
+      "speed": 0.12,
+      "freeValue": 0.30,
+      "automation": 0.08,
+      "ease": 0.15,
+      "batch": 0.10,
+      "reliability": 0.13
+    },
+    "quality-first": {
+      "quality": 0.32,
+      "speed": 0.14,
+      "freeValue": 0.08,
+      "automation": 0.09,
+      "ease": 0.12,
+      "batch": 0.13,
+      "reliability": 0.12
+    },
+    "automation-first": {
+      "quality": 0.13,
+      "speed": 0.11,
+      "freeValue": 0.06,
+      "automation": 0.27,
+      "ease": 0.10,
+      "batch": 0.20,
+      "reliability": 0.13
+    },
+    "speed-first": {
+      "quality": 0.15,
+      "speed": 0.30,
+      "freeValue": 0.10,
+      "automation": 0.09,
+      "ease": 0.13,
+      "batch": 0.10,
+      "reliability": 0.13
+    },
+    "ease-first": {
+      "quality": 0.14,
+      "speed": 0.14,
+      "freeValue": 0.12,
+      "automation": 0.07,
+      "ease": 0.28,
+      "batch": 0.11,
+      "reliability": 0.14
+    },
+    "batch-first": {
+      "quality": 0.16,
+      "speed": 0.13,
+      "freeValue": 0.08,
+      "automation": 0.14,
+      "ease": 0.09,
+      "batch": 0.28,
+      "reliability": 0.12
+    }
+  },
+  "scoring_formula": "score = sum(dimension_value * preset_weight)",
+  "value_scale": "0-10",
+  "notes": "All preset weights sum to 1.00 and include reliability as a stability trust factor."
+}
