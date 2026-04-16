@@ -25,8 +25,10 @@
     .panel { border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,.02); padding:12px; }
     .toolbar { display:flex; flex-wrap:wrap; gap:9px; }
     .label { font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin-bottom:8px; }
+    .label-row { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px; }
     .btn { border:1px solid var(--line); background:#101013; color:var(--muted); border-radius:999px; padding:6px 11px; font-size:12px; cursor:pointer; }
     .btn.active { background:#f2f2f4; color:#0a0a0b; border-color:#f2f2f4; font-weight:700; }
+    .btn-help { padding:5px 10px; font-size:11px; }
     .search-input { width:100%; border:1px solid var(--line); border-radius:10px; background:#0f1012; color:var(--text); font-size:13px; padding:9px 10px; outline:none; }
     .search-input:focus { border-color:rgba(255,255,255,.35); }
     .grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
@@ -35,10 +37,21 @@
     .card { border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,.03); padding:12px; }
     .card h3 { margin:0 0 8px; font-size:14px; }
     .card p { margin:0; color:var(--muted); font-size:12px; line-height:1.45; }
+    .risk { margin-top:8px; display:inline-block; border:1px solid rgba(255,112,112,.4); color:#ffd0d0; background:rgba(255,112,112,.12); border-radius:999px; font-size:11px; padding:2px 8px; }
+    .hint { border:1px dashed var(--line); border-radius:10px; padding:10px; color:var(--muted); font-size:12px; line-height:1.5; }
     .score { display:inline-block; margin-top:10px; border:1px solid var(--line); border-radius:999px; padding:2px 7px; font-size:11px; color:#dbf2ff; background:rgba(135,196,255,.15); }
     .link { margin-top:8px; display:inline-block; font-size:11px; color:#cfe7ff; text-decoration:none; border:1px solid var(--line); border-radius:999px; padding:3px 8px; background:rgba(135,196,255,.12); }
     .link:hover { color:#fff; border-color:rgba(255,255,255,.4); }
     .footer { margin-top:8px; border-top:1px solid var(--line); padding-top:10px; display:flex; flex-wrap:wrap; gap:8px; }
+    .modal { position:fixed; inset:0; background:rgba(0,0,0,.65); display:none; align-items:center; justify-content:center; padding:16px; z-index:20; }
+    .modal.open { display:flex; }
+    .modal-card { width:min(780px, 100%); border:1px solid var(--line); border-radius:12px; background:#101013; padding:14px; }
+    .modal-title { margin:0 0 8px; font-size:18px; }
+    .modal-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:10px; }
+    .modal-item { border:1px solid var(--line); border-radius:10px; padding:10px; background:rgba(255,255,255,.02); }
+    .modal-item h4 { margin:0 0 6px; font-size:13px; }
+    .modal-item p { margin:0; color:var(--muted); font-size:12px; line-height:1.45; }
+    @media (max-width:700px) { .modal-grid { grid-template-columns:1fr; } }
     @media (max-width:900px) { .grid { grid-template-columns:1fr; } .cards { grid-template-columns:1fr 1fr; } }
     @media (max-width:620px) { .cards { grid-template-columns:1fr; } .wrap { padding:20px 12px 34px; } }
   </style>
@@ -58,8 +71,15 @@
       <input id="searchInput" class="search-input" placeholder="Search tool name..." />
       <div class="label" style="margin-top:10px;">Chart Type</div>
       <div id="chartTypeBtns" class="toolbar"></div>
-      <div class="label" style="margin-top:10px;">Parameter Profile</div>
+      <div class="label-row" style="margin-top:10px;">
+        <div class="label" style="margin:0;">Parameter Profile</div>
+        <button id="profileHelpBtn" class="btn btn-help" type="button">Profile Help</button>
+      </div>
       <div id="modeBtns" class="toolbar"></div>
+    </section>
+
+    <section class="hint">
+      Default view is tuned per vertical (Bubble for background remover, Radar for text-to-video, Parallel for keyword research). Low-score rows are highlighted to expose tool weaknesses quickly.
     </section>
 
     <section class="grid">
@@ -77,6 +97,21 @@
       <a class="link" href="./terms.html">Terms</a>
     </footer>
   </main>
+  <div id="profileModal" class="modal" role="dialog" aria-modal="true" aria-label="Profile explanation">
+    <div class="modal-card">
+      <h3 class="modal-title">Parameter Profile Explanation</h3>
+      <p class="sub">Each profile changes weights across 7 dimensions: quality, speed, free value, automation, ease, batch, and reliability.</p>
+      <div class="modal-grid">
+        <article class="modal-item"><h4>Balanced</h4><p>General-purpose profile for most users. No extreme preference.</p></article>
+        <article class="modal-item"><h4>Free-first</h4><p>Prioritizes free usability and practical entry cost.</p></article>
+        <article class="modal-item"><h4>Quality-first</h4><p>Prioritizes output quality and final result consistency.</p></article>
+        <article class="modal-item"><h4>Automation-first</h4><p>Prioritizes API, workflow orchestration, and batch operation.</p></article>
+      </div>
+      <div style="margin-top:12px;">
+        <button id="profileModalClose" class="btn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     const categoryMeta = {
@@ -114,6 +149,16 @@
       { key: "radar", label: "Radar" },
       { key: "parallel", label: "Parallel" }
     ];
+    const defaultChartByCategory = {
+      bgremove: "bubble",
+      text2video: "radar",
+      keywordresearch: "parallel"
+    };
+    const chartPalette = {
+      normal: "rgba(150,196,255,.82)",
+      best: "rgba(171,232,180,.92)",
+      risk: "rgba(255,122,122,.86)"
+    };
 
     const modes = {
       balanced: { label: "Balanced", weights: { quality: .22, speed: .16, freeValue: .16, automation: .11, ease: .13, batch: .12, reliability: .10 } },
@@ -135,7 +180,7 @@
     const params = new URLSearchParams(window.location.search);
     let activeCategory = params.get("category");
     if (!datasets[activeCategory]) activeCategory = "bgremove";
-    let activeChartType = "bubble";
+    let activeChartType = defaultChartByCategory[activeCategory] || "bubble";
     let activeMode = "balanced";
     let searchTerm = "";
 
@@ -164,7 +209,7 @@
         const btn = document.createElement("button");
         btn.className = "btn" + (activeCategory === key ? " active" : "");
         btn.textContent = meta.label;
-        btn.onclick = () => { activeCategory = key; update(); };
+        btn.onclick = () => { activeCategory = key; activeChartType = defaultChartByCategory[key] || "bubble"; update(); };
         catWrap.appendChild(btn);
       });
 
@@ -210,7 +255,17 @@
           grid: { left: 86, right: 16, top: 44, bottom: 24 },
           xAxis: { type: "value", min: 0, max: 10, axisLabel: { color: "rgba(242,242,244,.72)" } },
           yAxis: { type: "category", data: rows.map(r => r.tool), inverse: true, axisLabel: { color: "rgba(242,242,244,.85)" } },
-          series: [{ type: "bar", data: rows.map(r => r.score), label: { show: true, position: "right", color: "rgba(242,242,244,.85)" } }]
+          series: [{
+            type: "bar",
+            data: rows.map(r => r.score),
+            itemStyle: {
+              color: (p) => {
+                if (p.value < 7) return chartPalette.risk;
+                return p.dataIndex === 0 ? chartPalette.best : chartPalette.normal;
+              }
+            },
+            label: { show: true, position: "right", color: "rgba(242,242,244,.85)" }
+          }]
         }, true);
         return;
       }
@@ -247,7 +302,17 @@
         grid: { left: 86, right: 16, top: 40, bottom: 24 },
         xAxis: { type: "value", min: 0, max: 10, axisLabel: { color: "rgba(242,242,244,.7)" } },
         yAxis: { type: "category", data: rows.map(r => r.tool), inverse: true, axisLabel: { color: "rgba(242,242,244,.85)" } },
-        series: [{ type: "bar", data: rows.map(r => r.score), label: { show: true, position: "right", color: "rgba(242,242,244,.85)" } }]
+        series: [{
+          type: "bar",
+          data: rows.map(r => r.score),
+          itemStyle: {
+            color: (p) => {
+              if (p.value < 7) return chartPalette.risk;
+              return p.dataIndex === 0 ? chartPalette.best : chartPalette.normal;
+            }
+          },
+          label: { show: true, position: "right", color: "rgba(242,242,244,.85)" }
+        }]
       }, true);
     }
 
@@ -266,6 +331,7 @@
           <p>${row.note}</p>
           <a class="link" href="${row.url}" target="_blank" rel="noopener noreferrer nofollow">Open Tool</a>
           <span class="score">Score ${row.score} / 10</span>
+          ${row.score < 7 ? '<span class="risk">Weak spot: low composite score</span>' : ''}
         `;
         wrap.appendChild(card);
       });
@@ -282,6 +348,12 @@
     document.getElementById("searchInput").addEventListener("input", (e) => {
       searchTerm = e.target.value.trim().toLowerCase();
       update();
+    });
+    const profileModal = document.getElementById("profileModal");
+    document.getElementById("profileHelpBtn").addEventListener("click", () => profileModal.classList.add("open"));
+    document.getElementById("profileModalClose").addEventListener("click", () => profileModal.classList.remove("open"));
+    profileModal.addEventListener("click", (e) => {
+      if (e.target === profileModal) profileModal.classList.remove("open");
     });
 
     update();
