@@ -43,6 +43,11 @@
     .link { margin-top:8px; display:inline-block; font-size:11px; color:#cfe7ff; text-decoration:none; border:1px solid var(--line); border-radius:999px; padding:3px 8px; background:rgba(135,196,255,.12); }
     .link:hover { color:#fff; border-color:rgba(255,255,255,.4); }
     .footer { margin-top:8px; border-top:1px solid var(--line); padding-top:10px; display:flex; flex-wrap:wrap; gap:8px; }
+    .pref-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:10px; }
+    .pref-card { border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,.03); padding:12px; }
+    .pref-card h4 { margin:0 0 8px; font-size:14px; }
+    .pref-why { margin:6px 0 0; color:var(--muted); font-size:12px; line-height:1.45; }
+    .pref-note { margin-top:8px; color:var(--muted); font-size:12px; }
     .modal { position:fixed; inset:0; background:rgba(0,0,0,.65); display:none; align-items:center; justify-content:center; padding:16px; z-index:20; }
     .modal.open { display:flex; }
     .modal-card { width:min(780px, 100%); border:1px solid var(--line); border-radius:12px; background:#101013; padding:14px; }
@@ -53,7 +58,7 @@
     .modal-item p { margin:0; color:var(--muted); font-size:12px; line-height:1.45; }
     @media (max-width:700px) { .modal-grid { grid-template-columns:1fr; } }
     @media (max-width:900px) { .grid { grid-template-columns:1fr; } .cards { grid-template-columns:1fr 1fr; } }
-    @media (max-width:620px) { .cards { grid-template-columns:1fr; } .wrap { padding:20px 12px 34px; } }
+    @media (max-width:620px) { .cards { grid-template-columns:1fr; } .pref-grid { grid-template-columns:1fr; } .wrap { padding:20px 12px 34px; } }
   </style>
 </head>
 <body>
@@ -88,6 +93,12 @@
     </section>
 
     <section id="cards" class="cards"></section>
+    <section class="panel">
+      <div class="label">Preference Selector (Pick 2-4)</div>
+      <div id="prefBtns" class="toolbar"></div>
+      <div id="prefResult" class="pref-grid"></div>
+      <p class="pref-note">Choose your priorities and get Top3 with factor-based explanations.</p>
+    </section>
 
     <footer class="footer">
       <a class="link" href="./about.html">About</a>
@@ -183,6 +194,7 @@
     let activeChartType = defaultChartByCategory[activeCategory] || "bubble";
     let activeMode = "balanced";
     let searchTerm = "";
+    let selectedPrefs = new Set(["quality", "ease"]);
 
     const mainChart = echarts.init(document.getElementById("mainChart"));
     const rankChart = echarts.init(document.getElementById("rankChart"));
@@ -231,6 +243,78 @@
         btn.textContent = mode.label;
         btn.onclick = () => { activeMode = key; update(); };
         modeWrap.appendChild(btn);
+      });
+    }
+
+    function normalizedWeights(baseWeights) {
+      const total = Object.values(baseWeights).reduce((sum, val) => sum + val, 0);
+      const result = {};
+      Object.entries(baseWeights).forEach(([key, val]) => {
+        result[key] = total ? (val / total) : 0;
+      });
+      return result;
+    }
+
+    function preferenceRows(rows) {
+      if (!rows.length) return [];
+      const boost = 0.06;
+      const boosted = { ...modes[activeMode].weights };
+      selectedPrefs.forEach((key) => { boosted[key] = (boosted[key] || 0) + boost; });
+      const prefWeights = normalizedWeights(boosted);
+      return rows
+        .map((row) => ({
+          ...row,
+          prefScore: Number(indicators.reduce((sum, dim) => sum + row[dim.key] * prefWeights[dim.key], 0).toFixed(2)),
+          prefWeights
+        }))
+        .sort((a, b) => b.prefScore - a.prefScore);
+    }
+
+    function renderPreferenceGame(rows) {
+      const btnWrap = document.getElementById("prefBtns");
+      btnWrap.innerHTML = "";
+      indicators.forEach((dim) => {
+        const active = selectedPrefs.has(dim.key);
+        const btn = document.createElement("button");
+        btn.className = "btn" + (active ? " active" : "");
+        btn.textContent = dim.name;
+        btn.onclick = () => {
+          if (selectedPrefs.has(dim.key)) {
+            if (selectedPrefs.size <= 2) return;
+            selectedPrefs.delete(dim.key);
+          } else {
+            if (selectedPrefs.size >= 4) return;
+            selectedPrefs.add(dim.key);
+          }
+          update();
+        };
+        btnWrap.appendChild(btn);
+      });
+
+      const resultWrap = document.getElementById("prefResult");
+      resultWrap.innerHTML = "";
+      const top3 = preferenceRows(rows).slice(0, 3);
+      if (!top3.length) {
+        resultWrap.innerHTML = `<article class="pref-card"><h4>No Match</h4><p class="pref-why">Try clearing search or switching vertical.</p></article>`;
+        return;
+      }
+
+      top3.forEach((row, idx) => {
+        const topFactors = indicators
+          .map((dim) => ({ name: dim.name, value: row[dim.key] * row.prefWeights[dim.key] }))
+          .sort((a, b) => b.value - a.value)
+          .slice(0, 2)
+          .map((f) => f.name)
+          .join(" + ");
+        const card = document.createElement("article");
+        card.className = "pref-card";
+        card.innerHTML = `
+          <h4>#${idx + 1} ${row.tool}</h4>
+          <a class="link" href="${row.url}" target="_blank" rel="noopener noreferrer nofollow">Open Tool</a>
+          <span class="score">Preference Score ${row.prefScore} / 10</span>
+          <p class="pref-why">Why: strongest factors are ${topFactors}. ${row.note}</p>
+        `;
+        resultWrap.appendChild(card);
       });
     }
 
@@ -343,6 +427,7 @@
       renderMainChart(rows);
       renderRankChart(rows);
       renderCards(rows);
+      renderPreferenceGame(rows);
     }
 
     document.getElementById("searchInput").addEventListener("input", (e) => {
